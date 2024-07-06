@@ -1,0 +1,477 @@
+{
+	"info": {
+		"_postman_id": "2ea28b90-9678-4247-b696-a9ded7d27d08",
+		"name": "SmartDrive",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34412724"
+	},
+	"item": [
+		{
+			"name": "Session",
+			"item": [
+				{
+					"name": "session/new_session",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"punto\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://0.0.0.0:8000/session/new_session",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "8000",
+							"path": [
+								"session",
+								"new_session"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "http://0.0.0.0:8000/session/new_session",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\" : \"punto\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://0.0.0.0:8000/session/new_session",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "8000",
+									"path": [
+										"session",
+										"new_session"
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.3 Python/3.11.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 06 Jul 2024 10:24:45 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "24"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "66891b6dd9ec7e402dfdbc4e"
+						}
+					]
+				},
+				{
+					"name": "session/find_by_id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://0.0.0.0:8000/session/66891b6dd9ec7e402dfdbc4e",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "8000",
+							"path": [
+								"session",
+								"66891b6dd9ec7e402dfdbc4e"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "http://0.0.0.0:8000/session/66891b6dd9ec7e402dfdbc4e",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://0.0.0.0:8000/session/66891b6dd9ec7e402dfdbc4e",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "8000",
+									"path": [
+										"session",
+										"66891b6dd9ec7e402dfdbc4e"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.3 Python/3.11.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 06 Jul 2024 10:29:46 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "183"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_id\": \"66891b6dd9ec7e402dfdbc4e\",\n    \"created_at\": \"Sat, 06 Jul 2024 12:24:45 GMT\",\n    \"latitude\": \"\",\n    \"longitude\": \"\",\n    \"name\": \"punto\",\n    \"status\": null,\n    \"updated_at\": \"Sat, 06 Jul 2024 12:24:45 GMT\"\n}"
+						}
+					]
+				},
+				{
+					"name": "session/find_all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://0.0.0.0:8000/session/find_all",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "8000",
+							"path": [
+								"session",
+								"find_all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "session/find_all",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://0.0.0.0:8000/session/find_all",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "8000",
+									"path": [
+										"session",
+										"find_all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.3 Python/3.11.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 06 Jul 2024 10:35:38 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "923"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"_id\": \"66891966783f8f56064b0a86\",\n        \"created_at\": \"Sat, 06 Jul 2024 12:16:06 GMT\",\n        \"latitude\": \"\",\n        \"longitude\": \"\",\n        \"name\": \"panda\",\n        \"status\": null,\n        \"updated_at\": \"Sat, 06 Jul 2024 12:16:06 GMT\"\n    },\n    {\n        \"_id\": \"668919ad35e1cb8c2469bbd8\",\n        \"created_at\": \"Sat, 06 Jul 2024 12:17:17 GMT\",\n        \"latitude\": \"\",\n        \"longitude\": \"\",\n        \"name\": \"ferrari\",\n        \"status\": null,\n        \"updated_at\": \"Sat, 06 Jul 2024 12:17:17 GMT\"\n    },\n    {\n        \"_id\": \"66891a3b3ad698e9940cf6f1\",\n        \"created_at\": \"Sat, 06 Jul 2024 12:19:39 GMT\",\n        \"latitude\": \"\",\n        \"longitude\": \"\",\n        \"name\": \"ferrari\",\n        \"status\": null,\n        \"updated_at\": \"Sat, 06 Jul 2024 12:19:39 GMT\"\n    },\n    {\n        \"_id\": \"66891a53be09d61b27298b7a\",\n        \"created_at\": \"Sat, 06 Jul 2024 12:20:03 GMT\",\n        \"latitude\": \"\",\n        \"longitude\": \"\",\n        \"name\": \"ferrari\",\n        \"status\": null,\n        \"updated_at\": \"Sat, 06 Jul 2024 12:20:03 GMT\"\n    },\n    {\n        \"_id\": \"66891b6dd9ec7e402dfdbc4e\",\n        \"created_at\": \"Sat, 06 Jul 2024 12:24:45 GMT\",\n        \"latitude\": \"\",\n        \"longitude\": \"\",\n        \"name\": \"punto\",\n        \"status\": null,\n        \"updated_at\": \"Sat, 06 Jul 2024 12:24:45 GMT\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "session/activate_by_id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://0.0.0.0:8000/session/activate/668935d5788c549c4cd7f7fb",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "8000",
+							"path": [
+								"session",
+								"activate",
+								"668935d5788c549c4cd7f7fb"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "session/activate_by_id",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "http://0.0.0.0:8000/session/activate/668935d5788c549c4cd7f7fb",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "8000",
+									"path": [
+										"session",
+										"activate",
+										"668935d5788c549c4cd7f7fb"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.3 Python/3.11.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 06 Jul 2024 12:18:06 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "180"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_id\": \"668935d5788c549c4cd7f7fb\",\n    \"created_at\": \"Sat, 06 Jul 2024 14:17:25 GMT\",\n    \"latitude\": \"\",\n    \"longitude\": \"\",\n    \"name\": \"punto\",\n    \"status\": 1,\n    \"updated_at\": \"Sat, 06 Jul 2024 12:18:06 GMT\"\n}"
+						}
+					]
+				},
+				{
+					"name": "session/deactivate_by_id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://0.0.0.0:8000/session/deactivate/66893a94c4e6cce8d533b367",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "8000",
+							"path": [
+								"session",
+								"deactivate",
+								"66893a94c4e6cce8d533b367"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "http://0.0.0.0:8000/session/deactivate/66893a94c4e6cce8d533b367",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "http://0.0.0.0:8000/session/deactivate/66893a94c4e6cce8d533b367",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "8000",
+									"path": [
+										"session",
+										"deactivate",
+										"66893a94c4e6cce8d533b367"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.3 Python/3.11.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 06 Jul 2024 12:45:02 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "180"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_id\": \"66893a94c4e6cce8d533b367\",\n    \"created_at\": \"Sat, 06 Jul 2024 14:37:40 GMT\",\n    \"latitude\": \"\",\n    \"longitude\": \"\",\n    \"name\": \"punto\",\n    \"status\": 2,\n    \"updated_at\": \"Sat, 06 Jul 2024 14:45:02 GMT\"\n}"
+						}
+					]
+				},
+				{
+					"name": "session/delete_by_id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://0.0.0.0:8000/session/delete/66893a36c4e6cce8d533b366",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "8000",
+							"path": [
+								"session",
+								"delete",
+								"66893a36c4e6cce8d533b366"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "http://0.0.0.0:8000/session/delete/66893a36c4e6cce8d533b366",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://0.0.0.0:8000/session/delete/66893a36c4e6cce8d533b366",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "8000",
+									"path": [
+										"session",
+										"delete",
+										"66893a36c4e6cce8d533b366"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.3 Python/3.11.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 06 Jul 2024 12:36:15 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "76"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Session with id 66893a36c4e6cce8d533b366 deleted successfully\"\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
