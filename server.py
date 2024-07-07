@@ -1,10 +1,12 @@
+import math
+
 import dash
 import time
 from dash.dependencies import Output, Input
 from dash import dcc, html
 from datetime import datetime
 import json
-import plotly.graph_objs as go
+#import plotly.graph_objs as go
 from collections import deque
 from flask import Flask, request
 from flask import jsonify
@@ -12,8 +14,23 @@ from bson import ObjectId  # Per gestire gli ID di MongoDB
 from pymongo import MongoClient
 
 
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
+import Classification
+import TestDrive
+
 server = Flask(__name__)
 app = dash.Dash(__name__, server=server)
+
+
+
+# Configura Flask-Limiter
+limiter = Limiter(
+    get_remote_address,
+    app=server,
+    default_limits=["1 per 1 seconds"]  # Limita a una richiesta ogni 2 secondi
+)
 
 MAX_DATA_POINTS = 1000
 UPDATE_FREQ_MS = 100
@@ -81,60 +98,117 @@ collection_sensor = db['sensor']
 collection_session = db['session']
 
 
+
+longitude = 0
+latitude = 0
+speed = 0
+
+free = True
+
 @server.route("/data", methods=["POST"])
-def data():  # listens to the data streamed from the sensor logger
-    if str(request.method) == "POST":
-        print(f'received data: {request.data}')
-        data = json.loads(request.data)
-        for d in data['payload']:
-            ts = datetime.fromtimestamp(d["time"] / 1000000000)
-            if len(times) == 0 or ts > times[-1]:
-                times.append(ts)
-                doc = {"time": ts}
-                if d.get("name", None) == "accelerometer":
-                    accel_x.append(d["values"]["x"])
-                    accel_y.append(d["values"]["y"])
-                    accel_z.append(d["values"]["z"])
-                if d.get("name", None) == "gyroscope":
-                    gyro_x.append(d["values"]["x"])
-                    gyro_y.append(d["values"]["y"])
-                    gyro_z.append(d["values"]["z"])
+def new_data():  # listens to the data streamed from the sensor logger
 
-                # Inizializziamo le variabili per longitudine, latitudine e velocità
-                longitude = None
-                latitude = None
-                speed = None
+    session_response, session_status_code = get_active_session()
 
-                # Iteriamo attraverso gli elementi di payload per cercare le informazioni desiderate
-                for item in data['payload']:
-                    if 'longitude' in item['values'] and 'latitude' in item['values'] and 'speed' in item['values']:
-                        longitude = item['values']['longitude']
-                        latitude = item['values']['latitude']
-                        speed = item['values']['speed']
-                        break  # Terminiamo il loop una volta trovati i valori desiderati
+    global longitude, latitude, speed, free
 
-                # Stampiamo i valori estratti
-                if longitude is not None and latitude is not None and speed is not None:
-                    print(f"Longitudine: {longitude}")
-                    print(f"Latitudine: {latitude}")
-                    print(f"Velocità: {speed}")
+    if session_status_code == 200:
+        # Se c'è una sola sessione attiva, continua con il metodo
+        active_session = session_response.json
+        session_id = active_session['_id']
+        # Continua con il resto del metodo usando session_id
+        print(f"Session ID: {session_id}")
+        # Inserisci qui il resto della tua logica
 
-                session = get_active_session()
-                print(session)
+        if str(request.method) == "POST":
+            #print(f'received data: {request.data}')
+            data = json.loads(request.data)
+            for d in data['payload']:
+                ts = datetime.fromtimestamp(d["time"] / 1000000000)
+                if len(times) == 0 or ts > times[-1]:
+                    times.append(ts)
 
-                # doc.update({
-                #      "accel_x": d["values"]["x"],
-                #      "accel_y": d["values"]["y"],
-                #      "accel_z": d["values"]["z"],
-                #      "gyro_x": d["values"]["x"],
-                #      "gyro_y": d["values"]["y"],
-                #      "gyro_z": d["values"]["z"],
-                #      "latitude": d["values"]["latitude"],
-                #      "longitude": d["values"]["longitude"]
-                # })
-                #collection_sensor.insert_one(doc)
-                time.sleep(1.0)
+
+                    # Iteriamo attraverso gli elementi di payload per cercare le informazioni desiderate
+                    for item in data['payload']:
+                        if 'longitude' in item['values'] and 'latitude' in item['values'] and 'speed' in item['values']:
+                            longitude = item['values']['longitude']
+                            latitude = item['values']['latitude']
+                            speed = item['values']['speed']
+                            break  # Terminiamo il loop una volta trovati i valori desiderati
+
+                    if latitude != 0 and longitude != 0 and free == True:
+                        free = False
+
+                        doc = {"time": ts}
+
+                        if d.get("name", None) == "accelerometer":
+                            accel_x.append(d["values"]["x"])
+                            accel_y.append(d["values"]["y"])
+                            accel_z.append(d["values"]["z"])
+                        if d.get("name", None) == "gyroscope":
+                            gyro_x.append(d["values"]["x"])
+                            gyro_y.append(d["values"]["y"])
+                            gyro_z.append(d["values"]["z"])
+
+
+                        # Stampiamo i valori estratti
+                        #if longitude is not None and latitude is not None and speed is not None:
+                            #print(f"Longitudine: {longitude}")
+                            #print(f"Latitudine: {latitude}")
+                            #print(f"Velocità: {speed}")
+
+                        #session = get_active_session()
+                        #print(session)
+
+                        ac_x = d["values"]["x"]
+                        ac_y = d["values"]["y"]
+                        ac_z = d["values"]["z"]
+                        ac_tot = math.sqrt(ac_x**2 + ac_y**2 + ac_z**2)
+
+                        #con questo controllo che arrivino anche i dati relativi alla posizione e limito il numero di richieste api
+
+
+                        style = Classification.calculateStyle(ac_tot, speed)
+
+                        print(session_id)
+                        print(ac_x)
+                        print(ac_y)
+                        print(ac_z)
+                        print(ac_tot)
+                        print(latitude)
+                        print(longitude)
+                        print(speed)
+                        print(style)
+                        time.sleep(3)
+                        free = True
+
+                        doc.update({
+                            "session_id": session_id,
+                            "accel_x": d["values"]["x"],
+                            "accel_y": d["values"]["y"],
+                            "accel_z": d["values"]["z"],
+                            "total_acceleration": ac_tot,
+                            "gyro_x": d["values"]["x"],
+                            "gyro_y": d["values"]["y"],
+                            "gyro_z": d["values"]["z"],
+                            "latitude": latitude,
+                            "longitude": longitude,
+                            "speed": speed,
+                            "style": style,
+                            "created_at": datetime.now(),
+                            "updated_at": datetime.now()
+                        })
+
+                        collection_sensor.insert_one(doc)
+    else:
+        # Se non ci sono sessioni attive o ci sono più di una, esci dall'if
+        print(f"Errore: {session_response.json['message'] if 'message' in session_response.json else session_response.json['error']}")
+
+    #collection_sensor.insert_one(doc)
+    #time.sleep(1.0)
     return "success"
+
 
 # verifica che ci sia una sessione attiva e ritorna il suo id
 @server.route("/session/get_active", methods=["GET"])

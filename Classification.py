@@ -134,5 +134,5 @@ def calculateStyle(acceleration, speed):
     #return style_approximation
 
 
-#calculateStyle(1, 80)
-update_classification()
+calculateStyle(3, 10)
+#update_classification()
