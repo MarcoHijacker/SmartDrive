@@ -1,0 +1,45 @@
+[{
+  "_id": {
+    "$oid": "66893a94c4e6cce8d533b367"
+  },
+  "name": "punto",
+  "longitude": "",
+  "latitude": "",
+  "status": 2,
+  "created_at": {
+    "$date": "2024-07-06T14:37:40.701Z"
+  },
+  "updated_at": {
+    "$date": "2024-07-06T14:45:02.217Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "66893abfc4e6cce8d533b368"
+  },
+  "name": "y",
+  "longitude": "",
+  "latitude": "",
+  "status": null,
+  "created_at": {
+    "$date": "2024-07-06T14:38:23.817Z"
+  },
+  "updated_at": {
+    "$date": "2024-07-06T14:38:23.817Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "668a447eb3124dcbd3a81bba"
+  },
+  "name": "lancia y",
+  "longitude": "",
+  "latitude": "",
+  "status": 1,
+  "created_at": {
+    "$date": "2024-07-07T09:32:14.681Z"
+  },
+  "updated_at": {
+    "$date": "2024-07-07T09:33:01.829Z"
+  }
+}]

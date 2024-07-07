@@ -119,6 +119,9 @@ def data():  # listens to the data streamed from the sensor logger
                     print(f"Latitudine: {latitude}")
                     print(f"Velocità: {speed}")
 
+                session = get_active_session()
+                print(session)
+
                 # doc.update({
                 #      "accel_x": d["values"]["x"],
                 #      "accel_y": d["values"]["y"],
@@ -133,6 +136,27 @@ def data():  # listens to the data streamed from the sensor logger
                 time.sleep(1.0)
     return "success"
 
+# verifica che ci sia una sessione attiva e ritorna il suo id
+@server.route("/session/get_active", methods=["GET"])
+def get_active_session():
+    try:
+        # Trova tutte le sessioni con status 1
+        active_sessions = list(collection_session.find({"status": 1}))
+
+        if len(active_sessions) == 1:
+            # Se esiste una sola sessione attiva, restituisci il suo ID
+            active_session = active_sessions[0]
+            active_session['_id'] = str(active_session['_id'])  # Converti ObjectId in stringa per la serializzazione JSON
+            return jsonify(active_session), 200
+        elif len(active_sessions) == 0:
+            # Se non ci sono sessioni attive
+            return jsonify({"message": "No active sessions found"}), 404
+        else:
+            # Se ci sono più di una sessione attiva
+            return jsonify({"error": "Multiple active sessions found"}), 409
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 # chiamata api per creare una nuova sessione
