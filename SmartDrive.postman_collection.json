@@ -472,6 +472,234 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Samples",
+			"item": [
+				{
+					"name": "samples/find_by_id_session",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://0.0.0.0:8000/samples/find_by_session/668d0162fbcd4caef1890494",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "8000",
+							"path": [
+								"samples",
+								"find_by_session",
+								"668d0162fbcd4caef1890494"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "http://0.0.0.0:8000/samples/find_by_session/668d0162fbcd4caef1890494",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://0.0.0.0:8000/samples/find_by_session/668d0162fbcd4caef1890494",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "8000",
+									"path": [
+										"samples",
+										"find_by_session",
+										"668d0162fbcd4caef1890494"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.3 Python/3.11.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 09 Jul 2024 11:09:24 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "12284"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"_id\": \"668d1597ea914e3bc142fe98\",\n        \"accel_x\": 0.05591881275177002,\n        \"accel_y\": -1.1597394943237305,\n        \"accel_z\": 1.7048813104629517,\n        \"created_at\": \"Tue, 09 Jul 2024 12:48:55 GMT\",\n        \"gyro_x\": 3.1082963943481445,\n        \"gyro_y\": -0.23593975603580475,\n        \"gyro_z\": 0.4369085133075714,\n        \"latitude\": 40.2569108,\n        \"longitude\": 18.0532696,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 25.969152450561523,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:48:50 GMT\",\n        \"total_acceleration\": 1.6959015956339958,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:48:55 GMT\"\n    },\n    {\n        \"_id\": \"668d159bea914e3bc142fe9a\",\n        \"accel_x\": -5.038800239562988,\n        \"accel_y\": -14.081645965576172,\n        \"accel_z\": 10.54071044921875,\n        \"created_at\": \"Tue, 09 Jul 2024 12:48:59 GMT\",\n        \"gyro_x\": 0.7699729800224304,\n        \"gyro_y\": -2.01594877243042,\n        \"gyro_z\": -7.209830284118652,\n        \"latitude\": 40.2573347,\n        \"longitude\": 18.0531532,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 4.2366943359375,\n        \"style\": 4,\n        \"time\": \"Tue, 09 Jul 2024 12:48:54 GMT\",\n        \"total_acceleration\": 19.11866777013707,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:48:59 GMT\"\n    },\n    {\n        \"_id\": \"668d15a0ea914e3bc142fe9c\",\n        \"accel_x\": -12.450274467468262,\n        \"accel_y\": 0.3567843437194824,\n        \"accel_z\": 3.8627398014068604,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:04 GMT\",\n        \"gyro_x\": -0.3662029206752777,\n        \"gyro_y\": 1.4049487113952637,\n        \"gyro_z\": 1.240783452987671,\n        \"latitude\": 40.2571399,\n        \"longitude\": 18.0531708,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 4.214279651641846,\n        \"style\": 4,\n        \"time\": \"Tue, 09 Jul 2024 12:48:58 GMT\",\n        \"total_acceleration\": 30.520807069151363,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:04 GMT\"\n    },\n    {\n        \"_id\": \"668d15a4ea914e3bc142fe9e\",\n        \"accel_x\": -12.775506973266602,\n        \"accel_y\": 14.418563842773438,\n        \"accel_z\": 14.582939147949219,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:08 GMT\",\n        \"gyro_x\": 1.1939009428024292,\n        \"gyro_y\": -0.6378772258758545,\n        \"gyro_z\": 1.4411413669586182,\n        \"latitude\": 40.2571724,\n        \"longitude\": 18.0530007,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 2.2290916442871094,\n        \"style\": 3,\n        \"time\": \"Tue, 09 Jul 2024 12:49:02 GMT\",\n        \"total_acceleration\": 20.003604671698586,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:08 GMT\"\n    },\n    {\n        \"_id\": \"668d15a8ea914e3bc142fea0\",\n        \"accel_x\": -1.2431561946868896,\n        \"accel_y\": 2.684485912322998,\n        \"accel_z\": 2.4234390258789062,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:12 GMT\",\n        \"gyro_x\": 1.8108566999435425,\n        \"gyro_y\": 0.010842538438737392,\n        \"gyro_z\": 0.3965925872325897,\n        \"latitude\": 40.2571326,\n        \"longitude\": 18.0530684,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.9800177812576294,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:06 GMT\",\n        \"total_acceleration\": 2.9107138038504132,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:12 GMT\"\n    },\n    {\n        \"_id\": \"668d15adea914e3bc142fea2\",\n        \"accel_x\": -1.818618655204773,\n        \"accel_y\": 2.7314329147338867,\n        \"accel_z\": -1.1399898529052734,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:17 GMT\",\n        \"gyro_x\": 1.258650779724121,\n        \"gyro_y\": 0.5178457498550415,\n        \"gyro_z\": 0.14736689627170563,\n        \"latitude\": 40.2571915,\n        \"longitude\": 18.0530664,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.13280174136161804,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:11 GMT\",\n        \"total_acceleration\": 2.6319589969837334,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:17 GMT\"\n    },\n    {\n        \"_id\": \"668d15b2ea914e3bc142fea4\",\n        \"accel_x\": -0.00000476837158203125,\n        \"accel_y\": -0.003774404525756836,\n        \"accel_z\": 0.005795478820800781,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:22 GMT\",\n        \"gyro_x\": -0.0009162708884105086,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": 0.0007635590736754239,\n        \"latitude\": 40.2572183,\n        \"longitude\": 18.0530747,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.04795123636722565,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:16 GMT\",\n        \"total_acceleration\": 0.06292458040348055,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:22 GMT\"\n    },\n    {\n        \"_id\": \"668d15b6ea914e3bc142fea6\",\n        \"accel_x\": 0.006852984428405762,\n        \"accel_y\": 0.01059037446975708,\n        \"accel_z\": -0.016264915466308594,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:26 GMT\",\n        \"gyro_x\": -0.0009162708884105086,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.0004581354442052543,\n        \"latitude\": 40.257215,\n        \"longitude\": 18.0530769,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.0069033862091600895,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:20 GMT\",\n        \"total_acceleration\": 0.006386887774909715,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:26 GMT\"\n    },\n    {\n        \"_id\": \"668d15baea914e3bc142fea8\",\n        \"accel_x\": -0.0032330751419067383,\n        \"accel_y\": 0.016014061868190765,\n        \"accel_z\": 0.0032024383544921875,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:30 GMT\",\n        \"gyro_x\": -0.0009162708884105086,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.0004581354442052543,\n        \"latitude\": 40.2572013,\n        \"longitude\": 18.053097,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.029550880193710327,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:24 GMT\",\n        \"total_acceleration\": 0.6916988231955308,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:30 GMT\"\n    },\n    {\n        \"_id\": \"668d15bfea914e3bc142feaa\",\n        \"accel_x\": -0.010369718074798584,\n        \"accel_y\": 0.008611604571342468,\n        \"accel_z\": 0.00220489501953125,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:35 GMT\",\n        \"gyro_x\": 0.00030542362947016954,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": 0.0007635590736754239,\n        \"latitude\": 40.2571981,\n        \"longitude\": 18.0530998,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.053408168256282806,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:29 GMT\",\n        \"total_acceleration\": 0.009523680722883928,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:35 GMT\"\n    },\n    {\n        \"_id\": \"668d15c3ea914e3bc142feac\",\n        \"accel_x\": 0.008661091327667236,\n        \"accel_y\": -0.010995395481586456,\n        \"accel_z\": 0.005260467529296875,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:39 GMT\",\n        \"gyro_x\": -0.0009162708884105086,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.0004581354442052543,\n        \"latitude\": 40.2572026,\n        \"longitude\": 18.053101,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.10957097262144089,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:33 GMT\",\n        \"total_acceleration\": 0.018939754777504793,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:39 GMT\"\n    },\n    {\n        \"_id\": \"668d15c8ea914e3bc142feae\",\n        \"accel_x\": 0.007425189018249512,\n        \"accel_y\": -0.002004750072956085,\n        \"accel_z\": -0.0027751922607421875,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:44 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": 0.0010689827613532543,\n        \"latitude\": 40.2572554,\n        \"longitude\": 18.0528794,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 8.071015357971191,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:38 GMT\",\n        \"total_acceleration\": 0.015246340537568922,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:44 GMT\"\n    },\n    {\n        \"_id\": \"668d15ccea914e3bc142feb0\",\n        \"accel_x\": -0.005404174327850342,\n        \"accel_y\": 0.004648275673389435,\n        \"accel_z\": -0.0014085769653320312,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:48 GMT\",\n        \"gyro_x\": 0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.2572289,\n        \"longitude\": 18.0530752,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.5258396863937378,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:42 GMT\",\n        \"total_acceleration\": 0.028759554014119615,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:48 GMT\"\n    },\n    {\n        \"_id\": \"668d15d0ea914e3bc142feb2\",\n        \"accel_x\": 0.005286574363708496,\n        \"accel_y\": 0.004563391208648682,\n        \"accel_z\": 0.0027780532836914062,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:52 GMT\",\n        \"gyro_x\": 0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.2572266,\n        \"longitude\": 18.0530711,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.1151396855711937,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:46 GMT\",\n        \"total_acceleration\": 0.013845007095637398,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:52 GMT\"\n    },\n    {\n        \"_id\": \"668d165a5eb623b9b4e615fd\",\n        \"accel_x\": 0.0014033913612365723,\n        \"accel_y\": 0.00798727571964264,\n        \"accel_z\": 0.03225421905517578,\n        \"created_at\": \"Tue, 09 Jul 2024 12:52:10 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": 0.0010689827613532543,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.2574006,\n        \"longitude\": 18.052902,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 5.567151069641113,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:52:04 GMT\",\n        \"total_acceleration\": 0.024708054642783986,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:52:10 GMT\"\n    },\n    {\n        \"_id\": \"668d165e5eb623b9b4e615ff\",\n        \"accel_x\": 0.0007333159446716309,\n        \"accel_y\": 0.0028080642223358154,\n        \"accel_z\": -0.012424468994140625,\n        \"created_at\": \"Tue, 09 Jul 2024 12:52:14 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": 0.0010689827613532543,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.2573894,\n        \"longitude\": 18.0528893,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.698970377445221,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:52:09 GMT\",\n        \"total_acceleration\": 0.020868537247370263,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:52:14 GMT\"\n    },\n    {\n        \"_id\": \"668d16625eb623b9b4e61601\",\n        \"accel_x\": -0.001950979232788086,\n        \"accel_y\": 0.0026057064533233643,\n        \"accel_z\": -0.0033473968505859375,\n        \"created_at\": \"Tue, 09 Jul 2024 12:52:18 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.25739,\n        \"longitude\": 18.052881,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.02421228028833866,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:52:13 GMT\",\n        \"total_acceleration\": 0.010420733741475955,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:52:18 GMT\"\n    },\n    {\n        \"_id\": \"668d16665eb623b9b4e61603\",\n        \"accel_x\": 0.007228970527648926,\n        \"accel_y\": -0.004487782716751099,\n        \"accel_z\": 0.0035390853881835938,\n        \"created_at\": \"Tue, 09 Jul 2024 12:52:22 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.2573752,\n        \"longitude\": 18.0528779,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.4491051137447357,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:52:17 GMT\",\n        \"total_acceleration\": 0.00728699443190053,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:52:22 GMT\"\n    },\n    {\n        \"_id\": \"668d166b5eb623b9b4e61605\",\n        \"accel_x\": -0.010379195213317871,\n        \"accel_y\": 0.029511451721191406,\n        \"accel_z\": -0.017482757568359375,\n        \"created_at\": \"Tue, 09 Jul 2024 12:52:27 GMT\",\n        \"gyro_x\": 0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": 0.0010689827613532543,\n        \"latitude\": 40.2573483,\n        \"longitude\": 18.0528522,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.9645217061042786,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:52:22 GMT\",\n        \"total_acceleration\": 0.01758182844226483,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:52:27 GMT\"\n    },\n    {\n        \"_id\": \"668d16dc5eb623b9b4e61607\",\n        \"accel_x\": -0.0191270112991333,\n        \"accel_y\": -0.01519399881362915,\n        \"accel_z\": -0.009500503540039062,\n        \"created_at\": \"Tue, 09 Jul 2024 12:54:20 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": 0.0010689827613532543,\n        \"latitude\": 40.2573483,\n        \"longitude\": 18.0528522,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.9645217061042786,\n        \"style\": 3,\n        \"time\": \"Tue, 09 Jul 2024 12:54:15 GMT\",\n        \"total_acceleration\": 7.771060719918876,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:54:20 GMT\"\n    },\n    {\n        \"_id\": \"668d16e05eb623b9b4e61609\",\n        \"accel_x\": 0.0031302273273468018,\n        \"accel_y\": 0.0077059268951416016,\n        \"accel_z\": -0.00345611572265625,\n        \"created_at\": \"Tue, 09 Jul 2024 12:54:24 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.2573483,\n        \"longitude\": 18.0528522,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.9645217061042786,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:54:19 GMT\",\n        \"total_acceleration\": 0.00490319735662284,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:54:24 GMT\"\n    },\n    {\n        \"_id\": \"668d16e65eb623b9b4e6160b\",\n        \"accel_x\": 0.0063459426164627075,\n        \"accel_y\": 0.0008565783500671387,\n        \"accel_z\": -0.0007152557373046875,\n        \"created_at\": \"Tue, 09 Jul 2024 12:54:30 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.2573476,\n        \"longitude\": 18.0525707,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:54:24 GMT\",\n        \"total_acceleration\": 0.009385729845209247,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:54:30 GMT\"\n    },\n    {\n        \"_id\": \"668d16eb5eb623b9b4e6160d\",\n        \"accel_x\": -0.0032927393913269043,\n        \"accel_y\": -0.0023635029792785645,\n        \"accel_z\": 0.0012187957763671875,\n        \"created_at\": \"Tue, 09 Jul 2024 12:54:35 GMT\",\n        \"gyro_x\": 0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.2573476,\n        \"longitude\": 18.0525707,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:54:29 GMT\",\n        \"total_acceleration\": 0.004602789905474417,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:54:35 GMT\"\n    },\n    {\n        \"_id\": \"668d16f05eb623b9b4e6160f\",\n        \"accel_x\": -0.0032898932695388794,\n        \"accel_y\": 0.00631403923034668,\n        \"accel_z\": -0.004021644592285156,\n        \"created_at\": \"Tue, 09 Jul 2024 12:54:40 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": 0.0010689827613532543,\n        \"latitude\": 40.2573476,\n        \"longitude\": 18.0525707,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:54:34 GMT\",\n        \"total_acceleration\": 0.009031998144194245,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:54:40 GMT\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "samples/find_all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://0.0.0.0:8000/samples/find_all",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "8000",
+							"path": [
+								"samples",
+								"find_all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "samples/find_all",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://0.0.0.0:8000/samples/find_all",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "8000",
+									"path": [
+										"samples",
+										"find_all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.3 Python/3.11.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 09 Jul 2024 11:14:29 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "12284"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"_id\": \"668d1597ea914e3bc142fe98\",\n        \"accel_x\": 0.05591881275177002,\n        \"accel_y\": -1.1597394943237305,\n        \"accel_z\": 1.7048813104629517,\n        \"created_at\": \"Tue, 09 Jul 2024 12:48:55 GMT\",\n        \"gyro_x\": 3.1082963943481445,\n        \"gyro_y\": -0.23593975603580475,\n        \"gyro_z\": 0.4369085133075714,\n        \"latitude\": 40.2569108,\n        \"longitude\": 18.0532696,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 25.969152450561523,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:48:50 GMT\",\n        \"total_acceleration\": 1.6959015956339958,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:48:55 GMT\"\n    },\n    {\n        \"_id\": \"668d159bea914e3bc142fe9a\",\n        \"accel_x\": -5.038800239562988,\n        \"accel_y\": -14.081645965576172,\n        \"accel_z\": 10.54071044921875,\n        \"created_at\": \"Tue, 09 Jul 2024 12:48:59 GMT\",\n        \"gyro_x\": 0.7699729800224304,\n        \"gyro_y\": -2.01594877243042,\n        \"gyro_z\": -7.209830284118652,\n        \"latitude\": 40.2573347,\n        \"longitude\": 18.0531532,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 4.2366943359375,\n        \"style\": 4,\n        \"time\": \"Tue, 09 Jul 2024 12:48:54 GMT\",\n        \"total_acceleration\": 19.11866777013707,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:48:59 GMT\"\n    },\n    {\n        \"_id\": \"668d15a0ea914e3bc142fe9c\",\n        \"accel_x\": -12.450274467468262,\n        \"accel_y\": 0.3567843437194824,\n        \"accel_z\": 3.8627398014068604,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:04 GMT\",\n        \"gyro_x\": -0.3662029206752777,\n        \"gyro_y\": 1.4049487113952637,\n        \"gyro_z\": 1.240783452987671,\n        \"latitude\": 40.2571399,\n        \"longitude\": 18.0531708,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 4.214279651641846,\n        \"style\": 4,\n        \"time\": \"Tue, 09 Jul 2024 12:48:58 GMT\",\n        \"total_acceleration\": 30.520807069151363,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:04 GMT\"\n    },\n    {\n        \"_id\": \"668d15a4ea914e3bc142fe9e\",\n        \"accel_x\": -12.775506973266602,\n        \"accel_y\": 14.418563842773438,\n        \"accel_z\": 14.582939147949219,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:08 GMT\",\n        \"gyro_x\": 1.1939009428024292,\n        \"gyro_y\": -0.6378772258758545,\n        \"gyro_z\": 1.4411413669586182,\n        \"latitude\": 40.2571724,\n        \"longitude\": 18.0530007,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 2.2290916442871094,\n        \"style\": 3,\n        \"time\": \"Tue, 09 Jul 2024 12:49:02 GMT\",\n        \"total_acceleration\": 20.003604671698586,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:08 GMT\"\n    },\n    {\n        \"_id\": \"668d15a8ea914e3bc142fea0\",\n        \"accel_x\": -1.2431561946868896,\n        \"accel_y\": 2.684485912322998,\n        \"accel_z\": 2.4234390258789062,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:12 GMT\",\n        \"gyro_x\": 1.8108566999435425,\n        \"gyro_y\": 0.010842538438737392,\n        \"gyro_z\": 0.3965925872325897,\n        \"latitude\": 40.2571326,\n        \"longitude\": 18.0530684,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.9800177812576294,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:06 GMT\",\n        \"total_acceleration\": 2.9107138038504132,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:12 GMT\"\n    },\n    {\n        \"_id\": \"668d15adea914e3bc142fea2\",\n        \"accel_x\": -1.818618655204773,\n        \"accel_y\": 2.7314329147338867,\n        \"accel_z\": -1.1399898529052734,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:17 GMT\",\n        \"gyro_x\": 1.258650779724121,\n        \"gyro_y\": 0.5178457498550415,\n        \"gyro_z\": 0.14736689627170563,\n        \"latitude\": 40.2571915,\n        \"longitude\": 18.0530664,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.13280174136161804,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:11 GMT\",\n        \"total_acceleration\": 2.6319589969837334,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:17 GMT\"\n    },\n    {\n        \"_id\": \"668d15b2ea914e3bc142fea4\",\n        \"accel_x\": -0.00000476837158203125,\n        \"accel_y\": -0.003774404525756836,\n        \"accel_z\": 0.005795478820800781,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:22 GMT\",\n        \"gyro_x\": -0.0009162708884105086,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": 0.0007635590736754239,\n        \"latitude\": 40.2572183,\n        \"longitude\": 18.0530747,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.04795123636722565,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:16 GMT\",\n        \"total_acceleration\": 0.06292458040348055,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:22 GMT\"\n    },\n    {\n        \"_id\": \"668d15b6ea914e3bc142fea6\",\n        \"accel_x\": 0.006852984428405762,\n        \"accel_y\": 0.01059037446975708,\n        \"accel_z\": -0.016264915466308594,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:26 GMT\",\n        \"gyro_x\": -0.0009162708884105086,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.0004581354442052543,\n        \"latitude\": 40.257215,\n        \"longitude\": 18.0530769,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.0069033862091600895,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:20 GMT\",\n        \"total_acceleration\": 0.006386887774909715,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:26 GMT\"\n    },\n    {\n        \"_id\": \"668d15baea914e3bc142fea8\",\n        \"accel_x\": -0.0032330751419067383,\n        \"accel_y\": 0.016014061868190765,\n        \"accel_z\": 0.0032024383544921875,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:30 GMT\",\n        \"gyro_x\": -0.0009162708884105086,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.0004581354442052543,\n        \"latitude\": 40.2572013,\n        \"longitude\": 18.053097,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.029550880193710327,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:24 GMT\",\n        \"total_acceleration\": 0.6916988231955308,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:30 GMT\"\n    },\n    {\n        \"_id\": \"668d15bfea914e3bc142feaa\",\n        \"accel_x\": -0.010369718074798584,\n        \"accel_y\": 0.008611604571342468,\n        \"accel_z\": 0.00220489501953125,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:35 GMT\",\n        \"gyro_x\": 0.00030542362947016954,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": 0.0007635590736754239,\n        \"latitude\": 40.2571981,\n        \"longitude\": 18.0530998,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.053408168256282806,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:29 GMT\",\n        \"total_acceleration\": 0.009523680722883928,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:35 GMT\"\n    },\n    {\n        \"_id\": \"668d15c3ea914e3bc142feac\",\n        \"accel_x\": 0.008661091327667236,\n        \"accel_y\": -0.010995395481586456,\n        \"accel_z\": 0.005260467529296875,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:39 GMT\",\n        \"gyro_x\": -0.0009162708884105086,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.0004581354442052543,\n        \"latitude\": 40.2572026,\n        \"longitude\": 18.053101,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.10957097262144089,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:33 GMT\",\n        \"total_acceleration\": 0.018939754777504793,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:39 GMT\"\n    },\n    {\n        \"_id\": \"668d15c8ea914e3bc142feae\",\n        \"accel_x\": 0.007425189018249512,\n        \"accel_y\": -0.002004750072956085,\n        \"accel_z\": -0.0027751922607421875,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:44 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": 0.0010689827613532543,\n        \"latitude\": 40.2572554,\n        \"longitude\": 18.0528794,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 8.071015357971191,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:38 GMT\",\n        \"total_acceleration\": 0.015246340537568922,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:44 GMT\"\n    },\n    {\n        \"_id\": \"668d15ccea914e3bc142feb0\",\n        \"accel_x\": -0.005404174327850342,\n        \"accel_y\": 0.004648275673389435,\n        \"accel_z\": -0.0014085769653320312,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:48 GMT\",\n        \"gyro_x\": 0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.2572289,\n        \"longitude\": 18.0530752,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.5258396863937378,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:42 GMT\",\n        \"total_acceleration\": 0.028759554014119615,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:48 GMT\"\n    },\n    {\n        \"_id\": \"668d15d0ea914e3bc142feb2\",\n        \"accel_x\": 0.005286574363708496,\n        \"accel_y\": 0.004563391208648682,\n        \"accel_z\": 0.0027780532836914062,\n        \"created_at\": \"Tue, 09 Jul 2024 12:49:52 GMT\",\n        \"gyro_x\": 0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.2572266,\n        \"longitude\": 18.0530711,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.1151396855711937,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:49:46 GMT\",\n        \"total_acceleration\": 0.013845007095637398,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:49:52 GMT\"\n    },\n    {\n        \"_id\": \"668d165a5eb623b9b4e615fd\",\n        \"accel_x\": 0.0014033913612365723,\n        \"accel_y\": 0.00798727571964264,\n        \"accel_z\": 0.03225421905517578,\n        \"created_at\": \"Tue, 09 Jul 2024 12:52:10 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": 0.0010689827613532543,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.2574006,\n        \"longitude\": 18.052902,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 5.567151069641113,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:52:04 GMT\",\n        \"total_acceleration\": 0.024708054642783986,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:52:10 GMT\"\n    },\n    {\n        \"_id\": \"668d165e5eb623b9b4e615ff\",\n        \"accel_x\": 0.0007333159446716309,\n        \"accel_y\": 0.0028080642223358154,\n        \"accel_z\": -0.012424468994140625,\n        \"created_at\": \"Tue, 09 Jul 2024 12:52:14 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": 0.0010689827613532543,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.2573894,\n        \"longitude\": 18.0528893,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.698970377445221,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:52:09 GMT\",\n        \"total_acceleration\": 0.020868537247370263,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:52:14 GMT\"\n    },\n    {\n        \"_id\": \"668d16625eb623b9b4e61601\",\n        \"accel_x\": -0.001950979232788086,\n        \"accel_y\": 0.0026057064533233643,\n        \"accel_z\": -0.0033473968505859375,\n        \"created_at\": \"Tue, 09 Jul 2024 12:52:18 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.25739,\n        \"longitude\": 18.052881,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.02421228028833866,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:52:13 GMT\",\n        \"total_acceleration\": 0.010420733741475955,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:52:18 GMT\"\n    },\n    {\n        \"_id\": \"668d16665eb623b9b4e61603\",\n        \"accel_x\": 0.007228970527648926,\n        \"accel_y\": -0.004487782716751099,\n        \"accel_z\": 0.0035390853881835938,\n        \"created_at\": \"Tue, 09 Jul 2024 12:52:22 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.2573752,\n        \"longitude\": 18.0528779,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.4491051137447357,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:52:17 GMT\",\n        \"total_acceleration\": 0.00728699443190053,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:52:22 GMT\"\n    },\n    {\n        \"_id\": \"668d166b5eb623b9b4e61605\",\n        \"accel_x\": -0.010379195213317871,\n        \"accel_y\": 0.029511451721191406,\n        \"accel_z\": -0.017482757568359375,\n        \"created_at\": \"Tue, 09 Jul 2024 12:52:27 GMT\",\n        \"gyro_x\": 0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": 0.0010689827613532543,\n        \"latitude\": 40.2573483,\n        \"longitude\": 18.0528522,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.9645217061042786,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:52:22 GMT\",\n        \"total_acceleration\": 0.01758182844226483,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:52:27 GMT\"\n    },\n    {\n        \"_id\": \"668d16dc5eb623b9b4e61607\",\n        \"accel_x\": -0.0191270112991333,\n        \"accel_y\": -0.01519399881362915,\n        \"accel_z\": -0.009500503540039062,\n        \"created_at\": \"Tue, 09 Jul 2024 12:54:20 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": 0.0010689827613532543,\n        \"latitude\": 40.2573483,\n        \"longitude\": 18.0528522,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.9645217061042786,\n        \"style\": 3,\n        \"time\": \"Tue, 09 Jul 2024 12:54:15 GMT\",\n        \"total_acceleration\": 7.771060719918876,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:54:20 GMT\"\n    },\n    {\n        \"_id\": \"668d16e05eb623b9b4e61609\",\n        \"accel_x\": 0.0031302273273468018,\n        \"accel_y\": 0.0077059268951416016,\n        \"accel_z\": -0.00345611572265625,\n        \"created_at\": \"Tue, 09 Jul 2024 12:54:24 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.2573483,\n        \"longitude\": 18.0528522,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0.9645217061042786,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:54:19 GMT\",\n        \"total_acceleration\": 0.00490319735662284,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:54:24 GMT\"\n    },\n    {\n        \"_id\": \"668d16e65eb623b9b4e6160b\",\n        \"accel_x\": 0.0063459426164627075,\n        \"accel_y\": 0.0008565783500671387,\n        \"accel_z\": -0.0007152557373046875,\n        \"created_at\": \"Tue, 09 Jul 2024 12:54:30 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.2573476,\n        \"longitude\": 18.0525707,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:54:24 GMT\",\n        \"total_acceleration\": 0.009385729845209247,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:54:30 GMT\"\n    },\n    {\n        \"_id\": \"668d16eb5eb623b9b4e6160d\",\n        \"accel_x\": -0.0032927393913269043,\n        \"accel_y\": -0.0023635029792785645,\n        \"accel_z\": 0.0012187957763671875,\n        \"created_at\": \"Tue, 09 Jul 2024 12:54:35 GMT\",\n        \"gyro_x\": 0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": -0.00015271181473508477,\n        \"latitude\": 40.2573476,\n        \"longitude\": 18.0525707,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:54:29 GMT\",\n        \"total_acceleration\": 0.004602789905474417,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:54:35 GMT\"\n    },\n    {\n        \"_id\": \"668d16f05eb623b9b4e6160f\",\n        \"accel_x\": -0.0032898932695388794,\n        \"accel_y\": 0.00631403923034668,\n        \"accel_z\": -0.004021644592285156,\n        \"created_at\": \"Tue, 09 Jul 2024 12:54:40 GMT\",\n        \"gyro_x\": -0.0006108472589403391,\n        \"gyro_y\": -0.00015271181473508477,\n        \"gyro_z\": 0.0010689827613532543,\n        \"latitude\": 40.2573476,\n        \"longitude\": 18.0525707,\n        \"session_id\": \"668d0162fbcd4caef1890494\",\n        \"speed\": 0,\n        \"style\": 1,\n        \"time\": \"Tue, 09 Jul 2024 12:54:34 GMT\",\n        \"total_acceleration\": 0.009031998144194245,\n        \"updated_at\": \"Tue, 09 Jul 2024 12:54:40 GMT\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "samples/find_by_id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://0.0.0.0:8000/samples/find_by_id/668d1597ea914e3bc142fe98",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "8000",
+							"path": [
+								"samples",
+								"find_by_id",
+								"668d1597ea914e3bc142fe98"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "http://0.0.0.0:8000/samples/find_by_id/668d1597ea914e3bc142fe98",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://0.0.0.0:8000/samples/find_by_id/668d1597ea914e3bc142fe98",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "8000",
+									"path": [
+										"samples",
+										"find_by_id",
+										"668d1597ea914e3bc142fe98"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.3 Python/3.11.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 09 Jul 2024 11:20:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "501"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_id\": \"668d1597ea914e3bc142fe98\",\n    \"accel_x\": 0.05591881275177002,\n    \"accel_y\": -1.1597394943237305,\n    \"accel_z\": 1.7048813104629517,\n    \"created_at\": \"Tue, 09 Jul 2024 12:48:55 GMT\",\n    \"gyro_x\": 3.1082963943481445,\n    \"gyro_y\": -0.23593975603580475,\n    \"gyro_z\": 0.4369085133075714,\n    \"latitude\": 40.2569108,\n    \"longitude\": 18.0532696,\n    \"session_id\": \"668d0162fbcd4caef1890494\",\n    \"speed\": 25.969152450561523,\n    \"style\": 1,\n    \"time\": \"Tue, 09 Jul 2024 12:48:50 GMT\",\n    \"total_acceleration\": 1.6959015956339958,\n    \"updated_at\": \"Tue, 09 Jul 2024 12:48:55 GMT\"\n}"
+						}
+					]
+				}
+			]
 		}
 	]
 }

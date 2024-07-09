@@ -458,6 +458,24 @@ def get_all_samples():
 
     return jsonify(samples)
 
+# find by id di una sessione
+@server.route('/samples/find_by_id/<sample_id>', methods=['GET'])
+def get_sample_by_id(sample_id):
+    try:
+        # Converti l'id in ObjectId
+        object_id = ObjectId(sample_id)
+    except:
+        return jsonify({"error": "Invalid sample_id format"}), 400
+
+    # Esegui la query per trovare il campione con l'_id specificato
+    result = collection_sensor.find_one({"_id": object_id})
+
+    if result:
+        result["_id"] = str(result["_id"])  # Converti ObjectId in stringa
+        return jsonify(result)
+    else:
+        return jsonify({"error": "Sample not found"}), 404
+
 
 if __name__ == "__main__":
     app.run_server(port=8000, host="0.0.0.0")
