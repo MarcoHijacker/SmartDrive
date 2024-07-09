@@ -432,11 +432,24 @@ def delete_session(id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
+# permette di cercare i campioni associati a una sessione
 @server.route('/samples/find_by_session/<session_id>', methods=['GET'])
 def get_samples_by_id_session(session_id):
     # Esegui la query per estrarre tutti i campioni con lo stesso session_id
     results = collection_sensor.find({"session_id": session_id})
+
+    # Converti i risultati in una lista di dizionari
+    samples = [sample for sample in results]
+    for sample in samples:
+        sample["_id"] = str(sample["_id"])  # Converti ObjectId in stringa
+
+    return jsonify(samples)
+
+# find all per i campioni
+@server.route('/samples/find_all', methods=['GET'])
+def get_all_samples():
+    # Esegui la query per estrarre tutti i campioni
+    results = collection_sensor.find()
 
     # Converti i risultati in una lista di dizionari
     samples = [sample for sample in results]
