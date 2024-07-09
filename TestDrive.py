@@ -1,3 +1,11 @@
+# questa classe implementa un modello di machine learning per l'addestramento nella rilevazione dello stile di guida
+
+#Stili di guida:
+# 1-Prudente: Chi guida con attenzione e rispetta rigorosamente le regole della strada.
+# 2-Normale: Un stile di guida equilibrato, senza eccessive accelerazioni o frenate, nel rispetto delle norme di circolazione.
+# 3-Sportivo: Chi guida in modo dinamico, con accelerazioni rapide e una conduzione più orientata al divertimento.
+# 4-Aggressivo: Chi ha una guida intensa, con accelerazioni e decelerazioni brusche, sorpassi rischiosi e un atteggiamento competitivo sulla strada.
+
 import pymongo
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.ensemble import RandomForestClassifier

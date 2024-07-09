@@ -94,7 +94,7 @@ def update_graph(_counter):
 
 client = MongoClient('mongodb://localhost:27017/')
 db = client['SmartDrive']
-collection_sensor = db['sensor']
+collection_sensor = db['samples']
 collection_session = db['session']
 
 
@@ -209,8 +209,19 @@ def new_data():  # listens to the data streamed from the sensor logger
 
                         # Convert numpy.int64 to int in doc before insertion
                         doc = convert_numpy_int64_to_int(doc)
-
                         collection_sensor.insert_one(doc)
+
+                        # aggiorno la session con i dati relativi alla posizione dell'ultima acquisizione
+                        session_object_id = ObjectId(session_id)
+                        collection_session.find_one_and_update(
+                            {"_id": session_object_id},
+                            {"$set": {
+                                "latitude": latitude,
+                                "longitude": longitude,
+                                "updated_at": datetime.now()
+                            }})
+
+
     else:
         # Se non ci sono sessioni attive o ci sono più di una, esci dall'if
         print(f"Errore: {session_response.json['message'] if 'message' in session_response.json else session_response.json['error']}")
@@ -420,6 +431,19 @@ def delete_session(id):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@server.route('/samples/find_by_session/<session_id>', methods=['GET'])
+def get_samples_by_id_session(session_id):
+    # Esegui la query per estrarre tutti i campioni con lo stesso session_id
+    results = collection_sensor.find({"session_id": session_id})
+
+    # Converti i risultati in una lista di dizionari
+    samples = [sample for sample in results]
+    for sample in samples:
+        sample["_id"] = str(sample["_id"])  # Converti ObjectId in stringa
+
+    return jsonify(samples)
 
 
 if __name__ == "__main__":

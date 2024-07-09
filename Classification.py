@@ -1,7 +1,7 @@
+# questa classe è utilizzata per classificare nei diversi stili di guida i vari campioni raccolti
+
 from pymongo import MongoClient
 import math
-
-
 
 # mi connetto al db e alla collection di test
 client = MongoClient('mongodb://localhost:27017/')
