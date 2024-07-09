@@ -6,18 +6,18 @@ from dash.dependencies import Output, Input
 from dash import dcc, html
 from datetime import datetime
 import json
-#import plotly.graph_objs as go
+import plotly.graph_objs as go
 from collections import deque
 from flask import Flask, request
 from flask import jsonify
 from bson import ObjectId  # Per gestire gli ID di MongoDB
 from pymongo import MongoClient
+import numpy as np
 
 
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
-import Classification
 import TestDrive
 
 server = Flask(__name__)
@@ -98,19 +98,31 @@ collection_sensor = db['sensor']
 collection_session = db['session']
 
 
-
+accelerometer_x = 0
+accelerometer_y = 0
+accelerometer_z = 0
+gyroscope_x = 0
+gyroscope_y = 0
+gyroscope_z = 0
 longitude = 0
 latitude = 0
 speed = 0
 
 free = True
 
+def convert_numpy_int64_to_int(doc):
+    """ Convert numpy.int64 to int in a given dictionary """
+    for key, value in doc.items():
+        if isinstance(value, np.int64):
+            doc[key] = int(value)
+    return doc
+
 @server.route("/data", methods=["POST"])
 def new_data():  # listens to the data streamed from the sensor logger
 
     session_response, session_status_code = get_active_session()
 
-    global longitude, latitude, speed, free
+    global longitude, latitude, speed, free, accelerometer_x, accelerometer_y, accelerometer_z, gyroscope_x, gyroscope_y, gyroscope_z
 
     if session_status_code == 200:
         # Se c'è una sola sessione attiva, continua con il metodo
@@ -136,45 +148,40 @@ def new_data():  # listens to the data streamed from the sensor logger
                             latitude = item['values']['latitude']
                             speed = item['values']['speed']
                             break  # Terminiamo il loop una volta trovati i valori desiderati
+                        if item['name'] == 'accelerometer' and 'values' in item and 'x' in item['values']:
+                            accelerometer_x = item['values']['x']
+                            accelerometer_y = item['values']['y']
+                            accelerometer_z = item['values']['z']
+                        elif item['name'] == 'gyroscope' and 'values' in item and 'x' in item['values']:
+                            gyroscope_x = item['values']['x']
+                            gyroscope_y = item['values']['y']
+                            gyroscope_z = item['values']['z']
 
                     if latitude != 0 and longitude != 0 and free == True:
                         free = False
 
                         doc = {"time": ts}
 
-                        if d.get("name", None) == "accelerometer":
-                            accel_x.append(d["values"]["x"])
-                            accel_y.append(d["values"]["y"])
-                            accel_z.append(d["values"]["z"])
-                        if d.get("name", None) == "gyroscope":
-                            gyro_x.append(d["values"]["x"])
-                            gyro_y.append(d["values"]["y"])
-                            gyro_z.append(d["values"]["z"])
+                        # if d.get("name", None) == "accelerometer":
+                        #     accel_x.append(d["accelerometer"]["values"]["x"])
+                        #     accel_y.append(d["accelerometer"]["values"]["y"])
+                        #     accel_z.append(d["accelerometer"]["values"]["z"])
+                        # if d.get("name", None) == "gyroscope":
+                        #     gyro_x.append(d["gyroscope"]["values"]["x"])
+                        #     gyro_y.append(d["gyroscope"]["values"]["y"])
+                        #     gyro_z.append(d["gyroscope"]["values"]["z"])
+                        #
+                        # ac_x = d["accelerometer"]["values"]["x"]
+                        # ac_y = d["accelerometer"]["values"]["y"]
+                        # ac_z = d["accelerometer"]["values"]["z"]
+                        ac_tot = math.sqrt(accelerometer_x**2 + accelerometer_y**2 + accelerometer_z**2)
 
-
-                        # Stampiamo i valori estratti
-                        #if longitude is not None and latitude is not None and speed is not None:
-                            #print(f"Longitudine: {longitude}")
-                            #print(f"Latitudine: {latitude}")
-                            #print(f"Velocità: {speed}")
-
-                        #session = get_active_session()
-                        #print(session)
-
-                        ac_x = d["values"]["x"]
-                        ac_y = d["values"]["y"]
-                        ac_z = d["values"]["z"]
-                        ac_tot = math.sqrt(ac_x**2 + ac_y**2 + ac_z**2)
-
-                        #con questo controllo che arrivino anche i dati relativi alla posizione e limito il numero di richieste api
-
-
-                        style = Classification.calculateStyle(ac_tot, speed)
+                        style = TestDrive.calculateStyle(ac_tot, speed)
 
                         print(session_id)
-                        print(ac_x)
-                        print(ac_y)
-                        print(ac_z)
+                        print(accelerometer_x)
+                        print(accelerometer_y)
+                        print(accelerometer_z)
                         print(ac_tot)
                         print(latitude)
                         print(longitude)
@@ -185,13 +192,13 @@ def new_data():  # listens to the data streamed from the sensor logger
 
                         doc.update({
                             "session_id": session_id,
-                            "accel_x": d["values"]["x"],
-                            "accel_y": d["values"]["y"],
-                            "accel_z": d["values"]["z"],
+                            "accel_x": accelerometer_x,
+                            "accel_y": accelerometer_y,
+                            "accel_z": accelerometer_z,
                             "total_acceleration": ac_tot,
-                            "gyro_x": d["values"]["x"],
-                            "gyro_y": d["values"]["y"],
-                            "gyro_z": d["values"]["z"],
+                            "gyro_x": gyroscope_x,
+                            "gyro_y": gyroscope_y,
+                            "gyro_z": gyroscope_z,
                             "latitude": latitude,
                             "longitude": longitude,
                             "speed": speed,
@@ -200,13 +207,14 @@ def new_data():  # listens to the data streamed from the sensor logger
                             "updated_at": datetime.now()
                         })
 
+                        # Convert numpy.int64 to int in doc before insertion
+                        doc = convert_numpy_int64_to_int(doc)
+
                         collection_sensor.insert_one(doc)
     else:
         # Se non ci sono sessioni attive o ci sono più di una, esci dall'if
         print(f"Errore: {session_response.json['message'] if 'message' in session_response.json else session_response.json['error']}")
 
-    #collection_sensor.insert_one(doc)
-    #time.sleep(1.0)
     return "success"
 
 

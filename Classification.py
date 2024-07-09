@@ -28,33 +28,18 @@ def update_classification():
         # Aggiorna il documento nel database con la nuova classificazione
         collection.update_one(
             {'_id': instance['_id']},
-            {'$set': {'classification': classification},}
+            {'$set': {'classification': classification}}
         )
 
-       # collection.update_one(
-       #     {'_id': instance['_id']},
-       #     {'$set': {'total_acceleration': accel}}
-       # )
+        collection.update_one(
+            {'_id': instance['_id']},
+            {'$set': {'total_acceleration': accel}}
+        )
 
 
 
 def calculateStyle(acceleration, speed):
     # Definizione delle soglie per ciascuno stile di guida
-    #limits = {
-        #"Prudent": {"acceleration": (0, 2), "speed": (0, 60)},
-        #"Normal": {"acceleration": (2, 4), "speed": (60, 80)},
-        #"Sporty": {"acceleration": (4, 6), "speed": (80, 100)},
-        #"Aggressive": {"acceleration": (6, float('inf')), "speed": (100, float('inf'))}
-    #}
-
-    limits = {
-        "Prudent": {"speed": (0, 60)},
-        "Normal": {"speed": (60, 80)},
-        "Sporty": {"speed": (80, 100)},
-        "Aggressive": {"speed": (100, float('inf'))}
-    }
-
-
 
     if 0 <= speed and speed < 40:
         if acceleration >= 0 and acceleration < 4:
@@ -105,34 +90,10 @@ def calculateStyle(acceleration, speed):
         elif 3 <= acceleration and acceleration < 6:
             print("Sporty")
             return 3
-        elif 6 <= acceleration:
+        elif 6 <= acceleration: #
             print("Aggressive")
             return 4
 
-        #if acc_min <= acceleration < acc_max and spe_min <= speed < spe_max:
-            #print(style)
-            #return style
 
-    # Se non rientra in nessun criterio, determina lo stile più vicino in base alla distanza dalle soglie
-    # distances = {}
-    # for style, measure in limits.items():
-    #     acc_min, acc_max = measure["acceleration"]
-    #     spe_min, spe_max = measure["speed"]
-    #
-    #     # Calcola la distanza dalle soglie
-    #     dist_acc = min(abs(acceleration - acc_min), abs(acceleration - acc_max))
-    #     dist_spe = min(abs(speed - spe_min), abs(speed - spe_max))
-    #
-    #     # Calcola la distanza totale
-    #     total_distance = dist_acc + dist_spe
-    #     distances[style] = total_distance
-    #
-    # # Trova lo stile con la distanza minore
-    # style_approximation = min(distances, key=distances.get)
-
-    #print(style_approximation)
-    #return style_approximation
-
-
-calculateStyle(3, 10)
+#calculateStyle(3, 10)
 #update_classification()
