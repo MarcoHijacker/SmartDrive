@@ -19,6 +19,7 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
 import TestDrive
+import Service
 
 server = Flask(__name__)
 app = dash.Dash(__name__, server=server)
@@ -187,7 +188,7 @@ def new_data():  # listens to the data streamed from the sensor logger
                         print(longitude)
                         print(speed)
                         print(style)
-                        time.sleep(3)
+                        time.sleep(1)
                         free = True
 
                         doc.update({
@@ -207,19 +208,21 @@ def new_data():  # listens to the data streamed from the sensor logger
                             "updated_at": datetime.now()
                         })
 
+                        Service.madgwick_filter(accelerometer_x, accelerometer_z, accelerometer_z, gyroscope_x, gyroscope_y, gyroscope_z, 1)
+
                         # Convert numpy.int64 to int in doc before insertion
-                        doc = convert_numpy_int64_to_int(doc)
-                        collection_sensor.insert_one(doc)
+                        #doc = convert_numpy_int64_to_int(doc)
+                        #collection_sensor.insert_one(doc)
 
                         # aggiorno la session con i dati relativi alla posizione dell'ultima acquisizione
-                        session_object_id = ObjectId(session_id)
-                        collection_session.find_one_and_update(
-                            {"_id": session_object_id},
-                            {"$set": {
-                                "latitude": latitude,
-                                "longitude": longitude,
-                                "updated_at": datetime.now()
-                            }})
+                        # session_object_id = ObjectId(session_id)
+                        # collection_session.find_one_and_update(
+                        #     {"_id": session_object_id},
+                        #     {"$set": {
+                        #         "latitude": latitude,
+                        #         "longitude": longitude,
+                        #         "updated_at": datetime.now()
+                        #     }})
 
 
     else:
@@ -267,6 +270,7 @@ def newSession():
         'longitude': '',  # Lasciato vuoto per ora
         'latitude': '',  # Lasciato vuoto per ora
         'status': None,
+        'style_average': None,
         'created_at': current_time,
         'updated_at': current_time
     }
@@ -411,6 +415,52 @@ def end_session(id):
         return jsonify({"error": str(e)}), 500
 
 
+# calcolo lo stile medio dei campioni associati alla stessa sessione
+@server.route('/session/style_average/<session_id>', methods=['PATCH'])
+def calculate_style_average(session_id):
+    # Trova la sessione corrispondente all'ID
+    session = collection_session.find_one({'_id': ObjectId(session_id)})
+    if not session:
+        return jsonify({'error': 'Session not found'}), 404
+
+    # Trova tutti i documenti di samples con lo stesso session_id
+    samples = collection_sensor.find({'session_id': session_id})
+
+    total_style_sum = 0
+    count = 0
+
+    # Calcola la somma dei valori di style
+    for sample in samples:
+        total_style_sum += sample['style']
+        count += 1
+
+    if count == 0:
+        return jsonify({'error': 'No samples found for the session'}), 404
+
+    # Calcola la media arrotondando all'intero più vicino
+    style_average = round(total_style_sum / count)
+
+    object_id = ObjectId(session_id)
+
+    # Aggiorna lo status a 2 e il campo updated_at
+    result = collection_session.find_one_and_update(
+        {"_id": object_id},
+        {"$set": {
+            "style_average": style_average,
+            "updated_at": datetime.now()
+        }},
+        return_document=True
+    )
+
+    if result:
+        # Restituisci l'oggetto aggiornato
+        result['_id'] = str(result['_id'])  # Converte ObjectId in stringa per la serializzazione JSON
+        return jsonify(result), 200
+    else:
+        print(f"Failed to update object with id {id}.")
+        return jsonify({"error": "Failed to update object"}), 500
+
+
 @server.route('/session/delete/<id>', methods=['DELETE'])
 def delete_session(id):
     try:
@@ -475,6 +525,8 @@ def get_sample_by_id(sample_id):
         return jsonify(result)
     else:
         return jsonify({"error": "Sample not found"}), 404
+
+
 
 
 if __name__ == "__main__":
