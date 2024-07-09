@@ -188,8 +188,11 @@ def new_data():  # listens to the data streamed from the sensor logger
                         print(longitude)
                         print(speed)
                         print(style)
+
                         time.sleep(1)
-                        free = True
+
+
+                        roll, pitch = Service.madgwick_filter(accelerometer_x, accelerometer_z, accelerometer_z, gyroscope_x, gyroscope_y, gyroscope_z, 1)
 
                         doc.update({
                             "session_id": session_id,
@@ -204,26 +207,28 @@ def new_data():  # listens to the data streamed from the sensor logger
                             "longitude": longitude,
                             "speed": speed,
                             "style": style,
+                            "roll": roll,
+                            "pitch": pitch,
                             "created_at": datetime.now(),
                             "updated_at": datetime.now()
                         })
 
-                        Service.madgwick_filter(accelerometer_x, accelerometer_z, accelerometer_z, gyroscope_x, gyroscope_y, gyroscope_z, 1)
 
                         # Convert numpy.int64 to int in doc before insertion
-                        #doc = convert_numpy_int64_to_int(doc)
-                        #collection_sensor.insert_one(doc)
+                        doc = convert_numpy_int64_to_int(doc)
+                        collection_sensor.insert_one(doc)
 
-                        # aggiorno la session con i dati relativi alla posizione dell'ultima acquisizione
-                        # session_object_id = ObjectId(session_id)
-                        # collection_session.find_one_and_update(
-                        #     {"_id": session_object_id},
-                        #     {"$set": {
-                        #         "latitude": latitude,
-                        #         "longitude": longitude,
-                        #         "updated_at": datetime.now()
-                        #     }})
+                        #aggiorno la session con i dati relativi alla posizione dell'ultima acquisizione
+                        session_object_id = ObjectId(session_id)
+                        collection_session.find_one_and_update(
+                             {"_id": session_object_id},
+                             {"$set": {
+                                 "latitude": latitude,
+                                 "longitude": longitude,
+                                 "updated_at": datetime.now()
+                             }})
 
+                        free = True
 
     else:
         # Se non ci sono sessioni attive o ci sono più di una, esci dall'if
