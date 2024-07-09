@@ -89,17 +89,6 @@ def calculateStyle(acceleration, speed):
     # Addestramento del modello
     forest_model.fit(X_train, y_train)
 
-    # # Valutazione del modello con cross-validation
-    # scores = cross_val_score(forest_model, X_train, y_train, cv=5)
-    # print(f'Cross-Validation Scores: {scores}')
-    # print(f'Mean Cross-Validation Accuracy: {scores.mean()}')
-    #
-    # # Predizione sui dati di test
-    # y_pred = forest_model.predict(X_test)
-    #
-    # # Valutazione delle prestazioni del modello sui dati di test
-    # print(classification_report(y_test, y_pred))
-
     # Test con nuovi dati
     new_data = [[acceleration, speed]]
     prediction = forest_model.predict(new_data)
@@ -108,19 +97,6 @@ def calculateStyle(acceleration, speed):
 
     # Ritorna il modello addestrato
     #return forest_model
-
-
-# def estimate_driving_style(acceleration, speed):
-#     global forest_model
-#
-#     # Controlla se il modello è già stato addestrato
-#     if forest_model is None:
-#         print("Addestra il modello prima di fare previsioni.")
-#         return None
-#
-#     # Effettua la previsione utilizzando il modello addestrato
-#     prediction = forest_model.predict([[acceleration, speed]])
-#     return prediction[0]
 
 
 #train_model_mongodb()

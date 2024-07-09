@@ -397,6 +397,81 @@
 					]
 				},
 				{
+					"name": "session/style_average/{id_session}",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://0.0.0.0:8000/session/style_average/668d0162fbcd4caef1890494",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "8000",
+							"path": [
+								"session",
+								"style_average",
+								"668d0162fbcd4caef1890494"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "session/style_average_by_id",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "http://0.0.0.0:8000/session/style_average/668d0162fbcd4caef1890494",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "8000",
+									"path": [
+										"session",
+										"style_average",
+										"668d0162fbcd4caef1890494"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.3 Python/3.11.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 09 Jul 2024 14:46:52 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "221"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_id\": \"668d0162fbcd4caef1890494\",\n    \"created_at\": \"Tue, 09 Jul 2024 11:22:42 GMT\",\n    \"latitude\": 40.2573476,\n    \"longitude\": 18.0525707,\n    \"name\": \"lancia delta\",\n    \"status\": 2,\n    \"style_average\": 1,\n    \"updated_at\": \"Tue, 09 Jul 2024 16:46:52 GMT\"\n}"
+						}
+					]
+				},
+				{
 					"name": "session/delete_by_id",
 					"request": {
 						"method": "DELETE",

@@ -36,19 +36,3 @@ def madgwick_filter(ax, ay, az, gx, gy, gz, dt):
     print(f'beccheggio {pitch}')
 
     return roll, pitch
-
-# Esempio di utilizzo con le letture dei tuoi accelerometro e giroscopio
-# accel_x = 3.760941505432129
-# accel_y = 2.2841129302978516
-# accel_z = 5.368364334106445
-# gyro_x = -2.3535945415496826
-# gyro_y = -1.3527212142944336
-# gyro_z = 1.4990191459655762
-
-# Supponendo che dt sia la differenza di tempo tra le letture dei sensori in secondi
-#dt = 0.1  # Esempio di differenza di tempo (aggiustare in base ai tuoi dati)
-
-#rollio, beccheggio = madgwick_filter(accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z, dt)
-
-#print(f'Rollio: {rollio * 180 / pi} gradi')
-#print(f'Beccheggio: {beccheggio * 180 / pi} gradi')
