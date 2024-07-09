@@ -1,5 +1,4 @@
 import math
-
 import dash
 import time
 from dash.dependencies import Output, Input
@@ -8,29 +7,26 @@ from datetime import datetime
 import json
 import plotly.graph_objs as go
 from collections import deque
-from flask import Flask, request
-from flask import jsonify
-from bson import ObjectId  # Per gestire gli ID di MongoDB
+from flask import Flask, request, jsonify
+from flask_cors import CORS  # Import CORS
+from bson import ObjectId  # For handling MongoDB IDs
 from pymongo import MongoClient
 import numpy as np
-
-
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-
 import TestDrive
 import Service
 
 server = Flask(__name__)
+CORS(server, resources={r"/*": {"origins": "*"}})  # Enable CORS
+
 app = dash.Dash(__name__, server=server)
 
-
-
-# Configura Flask-Limiter
+# Configure Flask-Limiter
 limiter = Limiter(
     get_remote_address,
     app=server,
-    default_limits=["1 per 1 seconds"]  # Limita a una richiesta ogni 2 secondi
+    default_limits=["2 per second"]  # Limit to one request per second
 )
 
 MAX_DATA_POINTS = 1000
@@ -62,8 +58,6 @@ app.layout = html.Div(
 
 @app.callback(Output("live_graph", "figure"), Input("counter", "n_intervals"))
 def update_graph(_counter):
- """
-
     data = [
         go.Scatter(x=list(time), y=list(d), name=name)
         for d, name in zip(
@@ -89,8 +83,6 @@ def update_graph(_counter):
         ]
 
     return graph
- """
-
 
 
 client = MongoClient('mongodb://localhost:27017/')
@@ -530,8 +522,6 @@ def get_sample_by_id(sample_id):
         return jsonify(result)
     else:
         return jsonify({"error": "Sample not found"}), 404
-
-
 
 
 if __name__ == "__main__":

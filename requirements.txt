@@ -1,0 +1,6 @@
+dash
+Flask
+Flask-Limiter
+numpy
+pymongo
+sklearn
