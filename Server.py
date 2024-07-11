@@ -3,7 +3,7 @@ import dash
 import time
 from dash.dependencies import Output, Input
 from dash import dcc, html
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import plotly.graph_objs as go
 from collections import deque
@@ -14,10 +14,14 @@ from pymongo import MongoClient
 import numpy as np
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 import TestDrive
 import Service
+import jwt
+from functools import wraps
 
 server = Flask(__name__)
+server.config['SECRET_KEY'] = 'supersecretkey'  # Chiave segreta per JWT
 CORS(server, resources={r"/*": {"origins": "*"}})  # Enable CORS
 
 app = dash.Dash(__name__, server=server)
@@ -56,6 +60,47 @@ app.layout = html.Div(
 )
 
 
+client = MongoClient('mongodb://localhost:27017/')
+db = client['SmartDrive']
+collection_sensor = db['samples']
+collection_session = db['session']
+collection_user = db['user']
+
+
+#jwt_token = JWTManager(server)
+
+# Funzione per verificare il token JWT
+# Funzione per verificare il token JWT
+def verify_token(token):
+    try:
+        payload = jwt.decode(token, server.config['SECRET_KEY'], algorithms=["HS256"])
+        return payload
+    except jwt.ExpiredSignatureError:
+        return None  # Token scaduto
+    except jwt.InvalidTokenError:
+        return None  # Token non valido
+
+# Decoratore per verificare l'autenticazione
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.headers.get('Authorization')
+
+        if not token:
+            return jsonify({'message': 'Token mancante!'}), 401
+
+        token = token.split(" ")[1]  # Formato del token "Bearer <token>"
+        payload = verify_token(token)
+
+        if not payload:
+            return jsonify({'message': 'Token non valido o scaduto!'}), 401
+
+        # Aggiungi il payload decodificato alla richiesta per utilizzarlo nel resto della funzione
+        request.current_user = payload
+        return f(*args, **kwargs)
+
+    return decorated
+
 @app.callback(Output("live_graph", "figure"), Input("counter", "n_intervals"))
 def update_graph(_counter):
     data = [
@@ -83,12 +128,6 @@ def update_graph(_counter):
         ]
 
     return graph
-
-
-client = MongoClient('mongodb://localhost:27017/')
-db = client['SmartDrive']
-collection_sensor = db['samples']
-collection_session = db['session']
 
 
 accelerometer_x = 0
@@ -493,6 +532,7 @@ def get_samples_by_id_session(session_id):
 
 # find all per i campioni
 @server.route('/samples/find_all', methods=['GET'])
+@token_required
 def get_all_samples():
     # Esegui la query per estrarre tutti i campioni
     results = collection_sensor.find()
@@ -558,6 +598,70 @@ def edit_session(id):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+
+
+
+@server.route('/user/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    mail = data.get('mail')
+    password = data.get('password')
+
+    if not mail or not password:
+        return jsonify({'message': 'Mail e password sono richiesti!'}), 400
+
+    hashed_password = Service.hash_password(password)
+    user = collection_user.find_one({"mail": mail, "password": hashed_password})
+
+    if user:
+        # Genera un token JWT con informazioni aggiuntive
+        payload = {
+            "user_id": str(user["_id"]),  # Converti ObjectId in stringa
+            "mail": user.get("mail", ""),  # Supponendo che 'email' sia un campo nel documento dell'utente
+            #"exp": datetime.utcnow() + timedelta(hours=10)  # Token valido per 10 ore
+        }
+        token = jwt.encode(payload, server.config['SECRET_KEY'], algorithm="HS256")
+        return jsonify({'token': token})
+
+    return jsonify({'message': 'Credenziali non valide!'}), 401
+
+
+@server.route('/user/new_user', methods=['POST'])
+def newUser():
+    client = MongoClient('mongodb://localhost:27017/')
+    db = client['SmartDrive']
+    collection_user = db['user']
+
+    # Estrarre il nome dalla richiesta API
+    name = request.json.get('name')
+    surname = request.json.get('surname')
+    mail = request.json.get('mail')
+    password = request.json.get('password')
+
+    # Ottenere la data e ora attuale
+    current_time = datetime.now()
+
+    # Creare il documento da inserire nel database
+    session_data = {
+        'name': name,
+        'surname': surname,
+        'mail': mail,
+        'password': Service.hash_password(password),
+        'created_at': current_time,
+        'updated_at': current_time
+    }
+
+    # Inserire il documento nella collezione 'session'
+    result = collection_user.insert_one(session_data)
+
+    # Verificare se l'inserimento è avvenuto con successo
+    if result.inserted_id:
+        # Restituire solo l'ID della sessione creata
+        return str(result.inserted_id), 201
+    else:
+        return '', 500
 
 
 if __name__ == "__main__":

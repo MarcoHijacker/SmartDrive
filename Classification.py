@@ -43,55 +43,55 @@ def calculateStyle(acceleration, speed):
 
     if 0 <= speed and speed < 40:
         if acceleration >= 0 and acceleration < 4:
-            print("Prudent")
+            #print("Prudent")
             return 1
         elif 4 <= acceleration and acceleration < 6:
-            print("Normal")
+            #print("Normal")
             return 2
         elif 6 <= acceleration and acceleration < 9:
-            print("Sporty")
+            #print("Sporty")
             return 3
         elif acceleration >= 9:
-            print("Aggressive")
+            #print("Aggressive")
             return 4
     elif 40 <= speed and speed < 60:
         if acceleration >=0 and acceleration < 3:
-            print("Prudent")
+            #print("Prudent")
             return 1
         elif 3 <= acceleration and acceleration < 5:
-            print("Normal")
+            #print("Normal")
             return 2
         elif 5 <= acceleration and acceleration < 8:
-            print("Sporty")
+            #print("Sporty")
             return 3
         elif acceleration >= 8:
-            print("Aggressive")
+            #print("Aggressive")
             return 4
     elif 60 <= speed and speed < 80:
         if acceleration >= 0 and acceleration < 2:
-            print("Prudent")
+            #print("Prudent")
             return 1
         elif 2 <= acceleration and acceleration < 4:
-            print("Normal")
+            #print("Normal")
             return 2
         elif 4 <= acceleration and acceleration < 7:
-            print("Sporty")
+            #print("Sporty")
             return 3
         elif acceleration >= 7:
-            print("Aggressive")
+            #print("Aggressive")
             return 4
     elif 80 <= speed:
         if acceleration == 0:
-            print("Prudent")
+            #print("Prudent")
             return 1
         elif 0 < acceleration and acceleration < 3:
-            print("Normal")
+            #print("Normal")
             return 2
         elif 3 <= acceleration and acceleration < 6:
-            print("Sporty")
+            #print("Sporty")
             return 3
         elif 6 <= acceleration: #
-            print("Aggressive")
+            #print("Aggressive")
             return 4
 
 

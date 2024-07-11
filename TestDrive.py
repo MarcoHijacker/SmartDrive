@@ -6,6 +6,11 @@
 # 3-Sportivo: Chi guida in modo dinamico, con accelerazioni rapide e una conduzione più orientata al divertimento.
 # 4-Aggressivo: Chi ha una guida intensa, con accelerazioni e decelerazioni brusche, sorpassi rischiosi e un atteggiamento competitivo sulla strada.
 
+
+#è stato utilizzato un modello di Random Forest per la classificazione. La Random Forest è un metodo di machine learning
+#che utilizza una combinazione di molti alberi decisionali per migliorare la precisione e controllare l'overfitting
+
+
 import pymongo
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.ensemble import RandomForestClassifier

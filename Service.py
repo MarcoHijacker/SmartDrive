@@ -1,5 +1,6 @@
 import numpy as np
 from math import atan2, asin, pi
+import hashlib
 
 # questo metodo permette di calcolare il rollio e il beccheggio dei nostri campioni
 def madgwick_filter(ax, ay, az, gx, gy, gz, dt):
@@ -36,3 +37,10 @@ def madgwick_filter(ax, ay, az, gx, gy, gz, dt):
     print(f'beccheggio {pitch}')
 
     return roll, pitch
+
+
+
+
+# Funzione per fare l'hash delle pass
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
