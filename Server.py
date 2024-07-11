@@ -168,7 +168,7 @@ def new_data():  # listens to the data streamed from the sensor logger
         # Inserisci qui il resto della tua logica
 
         if str(request.method) == "POST":
-            #print(f'received data: {request.data}')
+            print(f'received data: {request.data}')
             data = json.loads(request.data)
             for d in data['payload']:
                 ts = datetime.fromtimestamp(d["time"] / 1000000000)
@@ -682,6 +682,7 @@ def newUser():
     surname = request.json.get('surname')
     mail = request.json.get('mail')
     password = request.json.get('password')
+    device_id = request.json.get('device_id')
 
     # Ottenere la data e ora attuale
     current_time = datetime.now()
@@ -692,6 +693,7 @@ def newUser():
         'surname': surname,
         'mail': mail,
         'password': Service.hash_password(password),
+        'device_id': device_id,
         'created_at': current_time,
         'updated_at': current_time
     }
