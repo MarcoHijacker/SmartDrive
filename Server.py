@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 import json
 import plotly.graph_objs as go
 from collections import deque
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, g
 from flask_cors import CORS  # Import CORS
 from bson import ObjectId  # For handling MongoDB IDs
 from pymongo import MongoClient
@@ -94,6 +94,9 @@ def token_required(f):
 
         if not payload:
             return jsonify({'message': 'Token non valido o scaduto!'}), 401
+
+        # Per accedere ai dati dell'utente
+        g.current_user = payload
 
         # Aggiungi il payload decodificato alla richiesta per utilizzarlo nel resto della funzione
         request.current_user = payload
@@ -293,7 +296,11 @@ def get_active_session():
 
 # chiamata api per creare una nuova sessione
 @server.route("/session/new_session", methods=["POST"])
+@token_required
 def newSession():
+    # Estraggo id user dal jwt
+    user_id = g.current_user.get('user_id')
+
     # Estrarre il nome dalla richiesta API
     name = request.json.get('name')
     status = request.json.get('status')
@@ -306,6 +313,7 @@ def newSession():
         'name': name,
         'longitude': '',  # Lasciato vuoto per ora
         'latitude': '',  # Lasciato vuoto per ora
+        'user_id': user_id,
         'status': status,
         'style_average': None,
         'created_at': current_time,
@@ -321,6 +329,25 @@ def newSession():
         return str(result.inserted_id), 201
     else:
         return '', 500
+
+# Tramite questo metodo possiamo avere tutte le sessioni relative a un utente (id estratto dal jwt)
+@server.route("/session/find_by_user", methods=["GET"])
+@token_required
+def getSessionsByUser():
+    # Estraggo id user dal jwt
+    user_id = g.current_user.get('user_id')
+
+    # Cercare tutte le sessioni associate a questo user_id
+    sessions = collection_session.find({'user_id': user_id})
+
+    # Convertire i risultati in una lista di dizionari
+    session_list = []
+    for session in sessions:
+        session['_id'] = str(session['_id'])  # Convertire ObjectId in stringa
+        session_list.append(session)
+
+    # Restituire la lista di sessioni
+    return jsonify(session_list), 200
 
 # find by id
 @server.route("/session/<session_id>", methods=["GET"])
