@@ -10,7 +10,7 @@
 			"name": "Session",
 			"item": [
 				{
-					"name": "session/new_session",
+					"name": "session/new_session-JWT",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -97,6 +97,93 @@
 							],
 							"cookie": [],
 							"body": "66891b6dd9ec7e402dfdbc4e"
+						}
+					]
+				},
+				{
+					"name": "session/find_by_user-JWT",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjY4ZmUyM2ZlMTA0ZDczMWI4NGEwZjBkIiwibWFpbCI6InByaWFtb0BnbWFpbC5jb20ifQ.jLzRQHq30txldHMTlWHldnHxQa49Xv7o6de5gZ1eMdQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://0.0.0.0:8000/session/find_by_user",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "8000",
+							"path": [
+								"session",
+								"find_by_user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "find_by_user-JWT",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://0.0.0.0:8000/session/find_by_user",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "8000",
+									"path": [
+										"session",
+										"find_by_user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.3 Python/3.11.5"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 11 Jul 2024 16:15:04 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "245"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"_id\": \"6690035d5a8e7cdb5cb8d31f\",\n        \"created_at\": \"Thu, 11 Jul 2024 18:07:57 GMT\",\n        \"latitude\": \"\",\n        \"longitude\": \"\",\n        \"name\": \"ferrari\",\n        \"status\": null,\n        \"style_average\": null,\n        \"updated_at\": \"Thu, 11 Jul 2024 18:07:57 GMT\",\n        \"user_id\": \"668fe23fe104d731b84a0f0d\"\n    }\n]"
 						}
 					]
 				},
@@ -247,12 +334,22 @@
 					]
 				},
 				{
-					"name": "session/activate_by_id",
+					"name": "session/activate_by_id-JWT",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjY4ZmUyM2ZlMTA0ZDczMWI4NGEwZjBkIiwibWFpbCI6InByaWFtb0BnbWFpbC5jb20ifQ.jLzRQHq30txldHMTlWHldnHxQa49Xv7o6de5gZ1eMdQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "http://0.0.0.0:8000/session/activate/668935d5788c549c4cd7f7fb",
+							"raw": "http://0.0.0.0:8000/session/activate/6690035d5a8e7cdb5cb8d31f",
 							"protocol": "http",
 							"host": [
 								"0",
@@ -264,7 +361,7 @@
 							"path": [
 								"session",
 								"activate",
-								"668935d5788c549c4cd7f7fb"
+								"6690035d5a8e7cdb5cb8d31f"
 							]
 						}
 					},
@@ -322,12 +419,22 @@
 					]
 				},
 				{
-					"name": "session/deactivate_by_id",
+					"name": "session/deactivate_by_id-JWT",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjY4ZmUyM2ZlMTA0ZDczMWI4NGEwZjBkIiwibWFpbCI6InByaWFtb0BnbWFpbC5jb20ifQ.jLzRQHq30txldHMTlWHldnHxQa49Xv7o6de5gZ1eMdQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "http://0.0.0.0:8000/session/deactivate/66893a94c4e6cce8d533b367",
+							"raw": "http://0.0.0.0:8000/session/deactivate/6690035d5a8e7cdb5cb8d31f",
 							"protocol": "http",
 							"host": [
 								"0",
@@ -339,7 +446,7 @@
 							"path": [
 								"session",
 								"deactivate",
-								"66893a94c4e6cce8d533b367"
+								"6690035d5a8e7cdb5cb8d31f"
 							]
 						}
 					},
@@ -771,6 +878,201 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"_id\": \"668d1597ea914e3bc142fe98\",\n    \"accel_x\": 0.05591881275177002,\n    \"accel_y\": -1.1597394943237305,\n    \"accel_z\": 1.7048813104629517,\n    \"created_at\": \"Tue, 09 Jul 2024 12:48:55 GMT\",\n    \"gyro_x\": 3.1082963943481445,\n    \"gyro_y\": -0.23593975603580475,\n    \"gyro_z\": 0.4369085133075714,\n    \"latitude\": 40.2569108,\n    \"longitude\": 18.0532696,\n    \"session_id\": \"668d0162fbcd4caef1890494\",\n    \"speed\": 25.969152450561523,\n    \"style\": 1,\n    \"time\": \"Tue, 09 Jul 2024 12:48:50 GMT\",\n    \"total_acceleration\": 1.6959015956339958,\n    \"updated_at\": \"Tue, 09 Jul 2024 12:48:55 GMT\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "user/new_user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Priamo\",\r\n    \"surname\" : \"Tarantino\",\r\n    \"mail\" : \"priamo@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://0.0.0.0:8000/user/new_user",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"new_user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "http://0.0.0.0:8000/user/new_user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\" : \"Priamo\",\r\n    \"surname\" : \"Tarantino\",\r\n    \"mail\" : \"priamo@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://0.0.0.0:8000/user/new_user",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "8000",
+									"path": [
+										"user",
+										"new_user"
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.3 Python/3.11.5"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 11 Jul 2024 13:46:39 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "24"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "668fe23fe104d731b84a0f0d"
+						}
+					]
+				},
+				{
+					"name": "user/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mail\" : \"priamo@gmail.com\",\r\n    \"password\" : \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://0.0.0.0:8000/user/login",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "8000",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "http://0.0.0.0:8000/user/login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"mail\" : \"priamo@gmail.com\",\r\n    \"password\" : \"123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://0.0.0.0:8000/user/login",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "8000",
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.0.3 Python/3.11.5"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 11 Jul 2024 14:14:34 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "202"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjY4ZmUyM2ZlMTA0ZDczMWI4NGEwZjBkIiwibWFpbCI6InByaWFtb0BnbWFpbC5jb20iLCJleHAiOjE3MjA3NDMyNzR9.t_OuzZvDuLrCbsuZnJuCVGKMK0EOxho67RAeiJcPRR8\"\n}"
 						}
 					]
 				}

@@ -392,8 +392,9 @@ def getAllSessions():
         return jsonify({'message': str(e)}), 500
 
 
-# tramite questo metodo possiamo attivare una sessione e prepararla alla raccolta dei dati
+# Tramite questo metodo possiamo attivare una sessione e prepararla alla raccolta dei dati
 @server.route("/session/activate/<id>", methods=["PATCH"])
+@token_required
 def startSession(id):
     try:
         # Verifica se l'ID è un ObjectId valido
@@ -403,8 +404,15 @@ def startSession(id):
         # Converti l'ID in ObjectId
         object_id = ObjectId(id)
 
-        # Controlla se esiste già un'istanza con status 1
-        existing_active_instance = collection_session.find_one({"status": 1})
+        # Estrae id user dal JWT
+        user_id = g.current_user.get('user_id')
+
+        # Controlla se esiste già un'istanza con status 1 per l'utente
+        existing_active_instance = collection_session.find_one({
+            "status": 1,
+            "user_id": user_id
+        })
+
         if existing_active_instance:
             print("An instance with status 1 already exists.")
             return jsonify({"error": "An instance with status 1 already exists"}), 409
@@ -439,6 +447,7 @@ def startSession(id):
 
 
 @server.route("/session/deactivate/<id>", methods=["PATCH"])
+@token_required
 def end_session(id):
     try:
         # Verifica se l'ID è un ObjectId valido
@@ -448,8 +457,15 @@ def end_session(id):
         # Converti l'ID in ObjectId
         object_id = ObjectId(id)
 
+        # Estraggo dal jwt l'id user
+        user_id = g.current_user.get('user_id')
+
         # Trova l'oggetto con l'ID specificato
-        current_object = collection_session.find_one({"_id": object_id})
+        current_object = collection_session.find_one({
+            "_id": object_id,
+            "user_id": user_id
+        })
+
         if not current_object:
             print(f"Object with id {id} not found.")
             return jsonify({"error": "Object not found"}), 404
