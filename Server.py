@@ -26,7 +26,7 @@ app = dash.Dash(__name__, server=server)
 limiter = Limiter(
     get_remote_address,
     app=server,
-    default_limits=["2 per second"]  # Limit to one request per second
+    default_limits=["2 per second"]  # Limit to 2 requests per second
 )
 
 MAX_DATA_POINTS = 1000
@@ -257,6 +257,7 @@ def get_active_session():
 def newSession():
     # Estrarre il nome dalla richiesta API
     name = request.json.get('name')
+    status = request.json.get('status')
 
     # Ottenere la data e ora attuale
     current_time = datetime.now()
@@ -266,7 +267,7 @@ def newSession():
         'name': name,
         'longitude': '',  # Lasciato vuoto per ora
         'latitude': '',  # Lasciato vuoto per ora
-        'status': None,
+        'status': status,
         'style_average': None,
         'created_at': current_time,
         'updated_at': current_time
@@ -304,8 +305,6 @@ def getSession(session_id):
     except Exception as e:
         # Gestire eventuali eccezioni durante il recupero della sessione
         return jsonify({'message': str(e)}), 500
-
-
 
 
 # find all
@@ -522,6 +521,43 @@ def get_sample_by_id(sample_id):
         return jsonify(result)
     else:
         return jsonify({"error": "Sample not found"}), 404
+
+
+# Route to edit a session by ID (name only)
+@server.route('/session/edit/<id>', methods=['PATCH'])
+def edit_session(id):
+    try:
+        # Extract the session name from the request
+        name = request.json.get('name')
+        if not name:
+            return jsonify({"error": "Name is required"}), 400
+
+        # Verify if the ID is a valid ObjectId
+        if not ObjectId.is_valid(id):
+            return jsonify({"error": "Invalid ObjectId format"}), 400
+
+        # Convert the ID to ObjectId
+        object_id = ObjectId(id)
+
+        # Update the session name and updated_at fields
+        result = collection_session.find_one_and_update(
+            {"_id": object_id},
+            {"$set": {
+                "name": name,
+                "updated_at": datetime.now()
+            }},
+            return_document=True
+        )
+
+        if result:
+            # Return the updated object
+            result['_id'] = str(result['_id'])  # Convert ObjectId to string for JSON serialization
+            return jsonify(result), 200
+        else:
+            return jsonify({"error": "Session not found"}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == "__main__":
