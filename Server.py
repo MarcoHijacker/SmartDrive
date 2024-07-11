@@ -155,128 +155,182 @@ def convert_numpy_int64_to_int(doc):
 @server.route("/data", methods=["POST"])
 def new_data():  # listens to the data streamed from the sensor logger
 
-    session_response, session_status_code = get_active_session()
+    # Termino tutte le sessioni dell'utente loggato
+    #endUserSessions()
+
 
     global longitude, latitude, speed, free, accelerometer_x, accelerometer_y, accelerometer_z, gyroscope_x, gyroscope_y, gyroscope_z
 
-    if session_status_code == 200:
+    #print(f'received data: {request.data}')
+
+    # Estrazione del valore di deviceId
+    device_id = None
+
+    data = json.loads(request.data)
+
+    # Controlla i campi principali per il deviceId
+    for key, value in data.items():
+        if key == 'deviceId':
+            device_id = value
+            print(device_id)
+            break
+
+    # Cerco l'utente in base al suo device_id
+    idUser = get_user_id_by_device_id(device_id)
+    session_id = None
+
+    # Se c'è una sola sessione attiva posso memorizzare i campioni in arrivo
+    #if session_status_code == 200:
+    if verify_active_session(idUser) == 1:
+        session_response, session_status_code = get_active_session(idUser)
         # Se c'è una sola sessione attiva, continua con il metodo
         active_session = session_response.json
         session_id = active_session['_id']
-        # Continua con il resto del metodo usando session_id
-        print(f"Session ID: {session_id}")
-        # Inserisci qui il resto della tua logica
-
-        if str(request.method) == "POST":
-            print(f'received data: {request.data}')
-            data = json.loads(request.data)
-            for d in data['payload']:
-                ts = datetime.fromtimestamp(d["time"] / 1000000000)
-                if len(times) == 0 or ts > times[-1]:
-                    times.append(ts)
+    elif verify_active_session(idUser) == 0:
+        session_id = create_new_session_by_smartphone(datetime.now(), 1, idUser)
 
 
-                    # Iteriamo attraverso gli elementi di payload per cercare le informazioni desiderate
-                    for item in data['payload']:
-                        if 'longitude' in item['values'] and 'latitude' in item['values'] and 'speed' in item['values']:
-                            longitude = item['values']['longitude']
-                            latitude = item['values']['latitude']
-                            speed = item['values']['speed']
-                            break  # Terminiamo il loop una volta trovati i valori desiderati
-                        if item['name'] == 'accelerometer' and 'values' in item and 'x' in item['values']:
-                            accelerometer_x = item['values']['x']
-                            accelerometer_y = item['values']['y']
-                            accelerometer_z = item['values']['z']
-                        elif item['name'] == 'gyroscope' and 'values' in item and 'x' in item['values']:
-                            gyroscope_x = item['values']['x']
-                            gyroscope_y = item['values']['y']
-                            gyroscope_z = item['values']['z']
 
-                    if latitude != 0 and longitude != 0 and free == True:
-                        free = False
-
-                        doc = {"time": ts}
-
-                        # if d.get("name", None) == "accelerometer":
-                        #     accel_x.append(d["accelerometer"]["values"]["x"])
-                        #     accel_y.append(d["accelerometer"]["values"]["y"])
-                        #     accel_z.append(d["accelerometer"]["values"]["z"])
-                        # if d.get("name", None) == "gyroscope":
-                        #     gyro_x.append(d["gyroscope"]["values"]["x"])
-                        #     gyro_y.append(d["gyroscope"]["values"]["y"])
-                        #     gyro_z.append(d["gyroscope"]["values"]["z"])
-                        #
-                        # ac_x = d["accelerometer"]["values"]["x"]
-                        # ac_y = d["accelerometer"]["values"]["y"]
-                        # ac_z = d["accelerometer"]["values"]["z"]
-                        ac_tot = math.sqrt(accelerometer_x**2 + accelerometer_y**2 + accelerometer_z**2)
-
-                        style = TestDrive.calculateStyle(ac_tot, speed)
-
-                        print(session_id)
-                        print(accelerometer_x)
-                        print(accelerometer_y)
-                        print(accelerometer_z)
-                        print(ac_tot)
-                        print(latitude)
-                        print(longitude)
-                        print(speed)
-                        print(style)
-
-                        time.sleep(1)
+    if str(request.method) == "POST":
+        #print(f'received data: {request.data}')
+        #data = json.loads(request.data)
+        for d in data['payload']:
+            ts = datetime.fromtimestamp(d["time"] / 1000000000)
+            if len(times) == 0 or ts > times[-1]:
+                times.append(ts)
 
 
-                        roll, pitch = Service.madgwick_filter(accelerometer_x, accelerometer_z, accelerometer_z, gyroscope_x, gyroscope_y, gyroscope_z, 1)
+                # Iteriamo attraverso gli elementi di payload per cercare le informazioni desiderate
+                for item in data['payload']:
+                    if 'longitude' in item['values'] and 'latitude' in item['values'] and 'speed' in item['values']:
+                        longitude = item['values']['longitude']
+                        latitude = item['values']['latitude']
+                        speed = item['values']['speed']
+                        break  # Terminiamo il loop una volta trovati i valori desiderati
+                    if item['name'] == 'accelerometer' and 'values' in item and 'x' in item['values']:
+                        accelerometer_x = item['values']['x']
+                        accelerometer_y = item['values']['y']
+                        accelerometer_z = item['values']['z']
+                    elif item['name'] == 'gyroscope' and 'values' in item and 'x' in item['values']:
+                        gyroscope_x = item['values']['x']
+                        gyroscope_y = item['values']['y']
+                        gyroscope_z = item['values']['z']
 
-                        doc.update({
-                            "session_id": session_id,
-                            "accel_x": accelerometer_x,
-                            "accel_y": accelerometer_y,
-                            "accel_z": accelerometer_z,
-                            "total_acceleration": ac_tot,
-                            "gyro_x": gyroscope_x,
-                            "gyro_y": gyroscope_y,
-                            "gyro_z": gyroscope_z,
-                            "latitude": latitude,
-                            "longitude": longitude,
-                            "speed": speed,
-                            "style": style,
-                            "roll": roll,
-                            "pitch": pitch,
-                            "created_at": datetime.now(),
-                            "updated_at": datetime.now()
-                        })
+                if latitude != 0 and longitude != 0 and free == True:
+                    free = False
+
+                    doc = {"time": ts}
+
+                    # if d.get("name", None) == "accelerometer":
+                    #     accel_x.append(d["accelerometer"]["values"]["x"])
+                    #     accel_y.append(d["accelerometer"]["values"]["y"])
+                    #     accel_z.append(d["accelerometer"]["values"]["z"])
+                    # if d.get("name", None) == "gyroscope":
+                    #     gyro_x.append(d["gyroscope"]["values"]["x"])
+                    #     gyro_y.append(d["gyroscope"]["values"]["y"])
+                    #     gyro_z.append(d["gyroscope"]["values"]["z"])
+                    #
+                    # ac_x = d["accelerometer"]["values"]["x"]
+                    # ac_y = d["accelerometer"]["values"]["y"]
+                    # ac_z = d["accelerometer"]["values"]["z"]
+                    ac_tot = math.sqrt(accelerometer_x**2 + accelerometer_y**2 + accelerometer_z**2)
+
+                    style = TestDrive.calculateStyle(ac_tot, speed)
+
+                    print(session_id)
+                    print(accelerometer_x)
+                    print(accelerometer_y)
+                    print(accelerometer_z)
+                    print(ac_tot)
+                    print(latitude)
+                    print(longitude)
+                    print(speed)
+                    print(style)
+
+                    time.sleep(1)
 
 
-                        # Convert numpy.int64 to int in doc before insertion
-                        doc = convert_numpy_int64_to_int(doc)
-                        collection_sensor.insert_one(doc)
+                    roll, pitch = Service.madgwick_filter(accelerometer_x, accelerometer_z, accelerometer_z, gyroscope_x, gyroscope_y, gyroscope_z, 1)
 
-                        #aggiorno la session con i dati relativi alla posizione dell'ultima acquisizione
-                        session_object_id = ObjectId(session_id)
-                        collection_session.find_one_and_update(
-                             {"_id": session_object_id},
-                             {"$set": {
-                                 "latitude": latitude,
-                                 "longitude": longitude,
-                                 "updated_at": datetime.now()
-                             }})
+                    doc.update({
+                        "session_id": session_id,
+                        "accel_x": accelerometer_x,
+                        "accel_y": accelerometer_y,
+                        "accel_z": accelerometer_z,
+                        "total_acceleration": ac_tot,
+                        "gyro_x": gyroscope_x,
+                        "gyro_y": gyroscope_y,
+                        "gyro_z": gyroscope_z,
+                        "latitude": latitude,
+                        "longitude": longitude,
+                        "speed": speed,
+                        "style": style,
+                        "roll": roll,
+                        "pitch": pitch,
+                        "created_at": datetime.now(),
+                        "updated_at": datetime.now()
+                    })
 
-                        free = True
 
-    else:
+                    # Convert numpy.int64 to int in doc before insertion
+                    doc = convert_numpy_int64_to_int(doc)
+                    collection_sensor.insert_one(doc)
+
+                    #aggiorno la session con i dati relativi alla posizione dell'ultima acquisizione
+                    session_object_id = ObjectId(session_id)
+                    collection_session.find_one_and_update(
+                         {"_id": session_object_id},
+                         {"$set": {
+                             "latitude": latitude,
+                             "longitude": longitude,
+                             "updated_at": datetime.now()
+                         }})
+
+                    free = True
+
+    #else:
         # Se non ci sono sessioni attive o ci sono più di una, esci dall'if
-        print(f"Errore: {session_response.json['message'] if 'message' in session_response.json else session_response.json['error']}")
+        #print(f"Errore: {session_response.json['message'] if 'message' in session_response.json else session_response.json['error']}")
 
     return "success"
 
+def endUserSessions():
+    # Estraggo id user dal jwt
+    user_id = g.current_user.get('user_id')
+
+    # Cercare tutte le sessioni associate a questo user_id e con status 1
+    sessions = collection_session.find({'user_id': user_id, 'status': 1})
+
+    # Lista delle sessioni trovate
+    session_ids = [session['_id'] for session in sessions]
+
+    if session_ids:
+        # Aggiornare lo stato delle sessioni trovate a 2
+        result = collection_session.update_many(
+            {'_id': {'$in': session_ids}},
+            {'$set': {'status': 2}}
+        )
+
+# Verifico che non ci siano sessioni attive
+def verify_active_session(idUser):
+
+    active_sessions = list(collection_session.find({"status": 1}, {"user_id": idUser}))
+
+    if len(active_sessions) == 1:
+        return 1
+    elif len(active_sessions) == 0:
+        return 0
+    else:
+        # Se ci sono più di una sessione attiva
+        return 2
+
 
 # verifica che ci sia una sessione attiva e ritorna il suo id
-@server.route("/session/get_active", methods=["GET"])
-def get_active_session():
+#@server.route("/session/get_active", methods=["GET"])
+def get_active_session(idUser):
     try:
         # Trova tutte le sessioni con status 1
-        active_sessions = list(collection_session.find({"status": 1}))
+        active_sessions = list(collection_session.find({"status": 1}, {"user_id": idUser}))
 
         if len(active_sessions) == 1:
             # Se esiste una sola sessione attiva, restituisci il suo ID
@@ -297,13 +351,17 @@ def get_active_session():
 # chiamata api per creare una nuova sessione
 @server.route("/session/new_session", methods=["POST"])
 @token_required
-def newSession():
-    # Estraggo id user dal jwt
-    user_id = g.current_user.get('user_id')
+def newSession(newName=None, newStatus=None, idUser=None):
 
-    # Estrarre il nome dalla richiesta API
-    name = request.json.get('name')
-    status = request.json.get('status')
+    if newName is None and newStatus is None and idUser is None:
+        # Estrarre il nome dalla richiesta API
+        name = request.json.get('name')
+        status = request.json.get('status')
+        user_id = g.current_user.get('user_id')
+    else:
+        name = newName
+        status = newStatus
+        user_id = idUser
 
     # Ottenere la data e ora attuale
     current_time = datetime.now()
@@ -326,9 +384,36 @@ def newSession():
     # Verificare se l'inserimento è avvenuto con successo
     if result.inserted_id:
         # Restituire solo l'ID della sessione creata
+        print(result.inserted_id)
         return str(result.inserted_id), 201
     else:
         return '', 500
+
+def create_new_session_by_smartphone(name, status, idUser):
+    # Ottenere la data e ora attuale
+    current_time = datetime.now()
+
+    # Creare il documento da inserire nel database
+    session_data = {
+        'name': name,
+        'longitude': '',  # Lasciato vuoto per ora
+        'latitude': '',  # Lasciato vuoto per ora
+        'user_id': idUser,
+        'status': status,
+        'style_average': None,
+        'created_at': current_time,
+        'updated_at': current_time
+    }
+
+    # Inserire il documento nella collezione 'session'
+    result = collection_session.insert_one(session_data)
+
+    # Verificare se l'inserimento è avvenuto con successo
+    if result.inserted_id:
+        # Restituire solo l'ID della sessione creata
+        return str(result.inserted_id)
+    else:
+        raise RuntimeError("Errore durante l'inserimento della sessione nel database")
 
 # Tramite questo metodo possiamo avere tutte le sessioni relative a un utente (id estratto dal jwt)
 @server.route("/session/find_by_user", methods=["GET"])
@@ -707,6 +792,20 @@ def newUser():
         return str(result.inserted_id), 201
     else:
         return '', 500
+
+
+
+def get_user_id_by_device_id(device_id):
+
+    # Cerca l'utente con il device_id specificato
+    user = collection_user.find_one({'device_id': device_id})
+
+    if user:
+        # Ritorna l'ID dell'utente trovato
+        return str(user['_id'])
+    else:
+        # Se non viene trovato nessun utente con il device_id specificato
+        return None
 
 
 if __name__ == "__main__":

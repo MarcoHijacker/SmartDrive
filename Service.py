@@ -33,8 +33,8 @@ def madgwick_filter(ax, ay, az, gx, gy, gz, dt):
     pitch = asin(-2.0 * (q1 * q3 - q0 * q2))
     roll = atan2(2.0 * (q0 * q1 + q2 * q3), 1.0 - 2.0 * (q1**2 + q2**2))
 
-    print(f'rollio {roll}')
-    print(f'beccheggio {pitch}')
+    #print(f'rollio {roll}')
+    #print(f'beccheggio {pitch}')
 
     return roll, pitch
 
