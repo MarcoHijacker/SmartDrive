@@ -858,5 +858,18 @@ def update_user():
         return jsonify({"error": str(e)}), 500
 
 
+@server.route('/user/find_all', methods=['GET'])
+def findAll():
+    users = list(collection_user.find())
+
+    # Convertire ObjectId in stringa per la serializzazione JSON
+    for user in users:
+        user['_id'] = str(user['_id'])
+
+    return jsonify(users), 200
+
+
+
+
 if __name__ == "__main__":
     app.run_server(port=8000, host="0.0.0.0")
