@@ -276,6 +276,9 @@ def new_data():  # listens to the data streamed from the sensor logger
                     doc = convert_numpy_int64_to_int(doc)
                     collection_sensor.insert_one(doc)
 
+                    # Aggiorno la media degli stili
+                    calculate_style_average(session_id)
+
                     #aggiorno la session con i dati relativi alla posizione dell'ultima acquisizione
                     session_object_id = ObjectId(session_id)
                     collection_session.find_one_and_update(
