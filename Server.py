@@ -870,6 +870,62 @@ def findAll():
 
 
 
+@server.route('/user/<id>', methods=['GET'])
+def findById(id):
+
+    if not ObjectId.is_valid(id):
+        return jsonify({"error": "Invalid ObjectId format"}), 400
+
+    user = collection_user.find_one({"_id": ObjectId(id)})
+
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Convertire ObjectId in stringa per la serializzazione JSON
+    user['_id'] = str(user['_id'])
+
+    return jsonify(user), 200
+
+
+
+
+@server.route('/user/delete', methods=['DELETE'])
+@token_required
+def delete_user():
+    try:
+        user_id = g.current_user.get('user_id')
+        object_id = ObjectId(user_id)
+
+        # Trova l'utente con l'ID specificato
+        user = collection_user.find_one({"_id": object_id})
+
+        if not user:
+            return jsonify({"errore": "Utente non trovato"}), 404
+
+        # Trova tutte le sessioni dell'utente
+        sessions = list(collection_session.find({"user_id": str(object_id)}))
+
+        for session in sessions:
+            session_id = session["_id"]
+
+            # Elimina tutti i samples collegati alla sessione
+            collection_sensor.delete_many({"session_id": str(session_id)})
+
+        # Elimina tutte le sessioni dell'utente
+        collection_session.delete_many({"user_id": str(object_id)})
+
+        # Elimina l'utente
+        result = collection_user.delete_one({"_id": object_id})
+
+        if result.deleted_count > 0:
+            return jsonify({"messaggio": "Utente eliminato correttamente"}), 200
+        else:
+            return jsonify({"errore": "Errore"}), 500
+
+    except Exception as e:
+        return jsonify({"errorre": str(e)}), 500
+
+
 
 if __name__ == "__main__":
     app.run_server(port=8000, host="0.0.0.0")
