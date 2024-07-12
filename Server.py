@@ -929,6 +929,57 @@ def delete_user():
         return jsonify({"errorre": str(e)}), 500
 
 
+@server.route('/user/style_average', methods=['GET'])
+@token_required
+def get_style_average():
+    try:
+        user_id = g.current_user.get('user_id')
+        object_id = ObjectId(user_id)
+
+        # Verifica se l'ID è un ObjectId valido
+        if not ObjectId.is_valid(object_id):
+            return jsonify({"error": "Invalid ObjectId format"}), 400
+
+
+        # Trova l'utente con l'ID specificato
+        user = collection_user.find_one({"_id": object_id})
+
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        # Trova tutte le sessioni dell'utente
+        sessions = list(collection_session.find({"user_id": str(object_id)}))
+
+        if not sessions:
+            return jsonify({"error": "No sessions found for this user"}), 404
+
+        session_ids = [str(session['_id']) for session in sessions]
+
+        # Trova tutti i campioni associati alle sessioni dell'utente
+        samples = list(collection_sensor.find({"session_id": {"$in": session_ids}}))
+
+        if not samples:
+            return jsonify({"error": "No samples found for this user's sessions"}), 404
+
+        # Calcola la media degli style
+        total_style = 0
+        count = 0
+
+        for sample in samples:
+            if 'style' in sample and sample['style'] is not None:
+                total_style += sample['style']
+                count += 1
+
+        if count == 0:
+            return jsonify({"error": "No valid style data found"}), 404
+
+        style_average = total_style / count
+
+        return jsonify({"style_average": style_average}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 if __name__ == "__main__":
     app.run_server(port=8000, host="0.0.0.0")
