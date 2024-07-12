@@ -808,5 +808,55 @@ def get_user_id_by_device_id(device_id):
         return None
 
 
+
+@server.route("/user/modify", methods=["PATCH"])
+@token_required
+def update_user():
+    try:
+
+        # Estraggo dal jwt l'id user
+        user_id = g.current_user.get('user_id')
+        object_id = ObjectId(user_id)
+
+        # Trova l'utente con l'ID specificato
+        user = collection_user.find_one({"_id": object_id})
+
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        # Estrarre i campi dal corpo della richiesta
+        data = request.get_json()
+        name = data.get('name')
+        surname = data.get('surname')
+        device_id = data.get('device_id')
+
+        # Aggiorna solo i campi specificati
+        update_fields = {}
+        if name:
+            update_fields['name'] = name
+        if surname:
+            update_fields['surname'] = surname
+        if device_id:
+            update_fields['device_id'] = device_id
+        update_fields['updated_at'] = datetime.now()
+
+        # Aggiorna l'utente nel database
+        result = collection_user.find_one_and_update(
+            {"_id": object_id},
+            {"$set": update_fields},
+            return_document=True
+        )
+
+        if result:
+            # Converte ObjectId in stringa per la serializzazione JSON
+            result['_id'] = str(result['_id'])
+            return jsonify(result), 200
+        else:
+            return jsonify({"error": "Failed to update user"}), 500
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 if __name__ == "__main__":
     app.run_server(port=8000, host="0.0.0.0")
