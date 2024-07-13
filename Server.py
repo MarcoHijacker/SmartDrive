@@ -981,5 +981,104 @@ def get_style_average():
         return jsonify({"error": str(e)}), 500
 
 
+@server.route('/user/get_global_statistics', methods=['GET'])
+@token_required
+def get_user_stats():
+    user_id = g.current_user.get('user_id')
+    user_object_id = ObjectId(user_id)
+
+    # Trova tutte le sessioni associate all'utente
+    sessions = list(collection_session.find({'user_id': str(user_object_id)}))
+
+    # Inizializza variabili per il calcolo delle statistiche
+    total_speed = 0
+    total_acceleration = 0
+    max_speed = 0
+    max_acceleration = 0
+    sample_count = 0
+
+    # Itera attraverso tutte le sessioni e i relativi campioni
+    for session in sessions:
+        session_id = session['_id']
+        #session_object_id = ObjectId(session_id)
+        samples = list(collection_sensor.find({'session_id': str(session_id)}))
+
+        for sample in samples:
+            speed = sample['speed']
+            total_acceleration_value = sample['total_acceleration']
+
+            total_speed += speed
+            total_acceleration += total_acceleration_value
+
+            if speed > max_speed:
+                max_speed = speed
+
+            if total_acceleration_value > max_acceleration:
+                max_acceleration = total_acceleration_value
+
+            sample_count += 1
+
+    # Calcola le statistiche medie
+    if sample_count > 0:
+        average_speed = total_speed / sample_count
+        average_acceleration = total_acceleration / sample_count
+    else:
+        average_speed = 0
+        average_acceleration = 0
+
+    # Restituisci le statistiche in formato JSON
+    return jsonify({
+        'average_speed': average_speed,
+        'average_acceleration': average_acceleration,
+        'max_speed': max_speed,
+        'max_acceleration': max_acceleration
+    })
+
+
+@server.route('/user/get_session_statistics/<session_id>', methods=['GET'])
+@token_required
+def get_session_metrics(session_id):
+    try:
+        # Recupera tutti i campioni per la sessione data
+        samples = list(collection_sensor.find({"session_id": session_id}))
+
+        if not samples:
+            return jsonify({"error": "No samples found for this session_id"}), 404
+
+        # Calcola le metriche richieste
+        total_speed = 0
+        total_acceleration = 0
+        max_speed = float('-inf')
+        max_acceleration = float('-inf')
+
+        for sample in samples:
+            speed = sample["speed"]
+            total_acceleration_value = sample["total_acceleration"]
+
+            total_speed += speed
+            total_acceleration += total_acceleration_value
+
+            if speed > max_speed:
+                max_speed = speed
+
+            if total_acceleration_value > max_acceleration:
+                max_acceleration = total_acceleration_value
+
+        avg_speed = total_speed / len(samples)
+        avg_acceleration = total_acceleration / len(samples)
+
+        metrics = {
+            "average_speed": avg_speed,
+            "average_acceleration": avg_acceleration,
+            "max_speed": max_speed,
+            "max_acceleration": max_acceleration
+        }
+
+        return jsonify(metrics)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 if __name__ == "__main__":
     app.run_server(port=8000, host="0.0.0.0")
