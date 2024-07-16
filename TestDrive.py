@@ -104,5 +104,5 @@ def calculateStyle(acceleration, speed):
     #return forest_model
 
 
-#train_model_mongodb()
+train_model_mongodb()
 

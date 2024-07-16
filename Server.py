@@ -536,7 +536,7 @@ def startSession(id):
 
 @server.route("/session/deactivate/<id>", methods=["PATCH"])
 @token_required
-def end_session(id):
+def endSession(id):
     try:
         # Verifica se l'ID è un ObjectId valido
         if not ObjectId.is_valid(id):
@@ -583,7 +583,7 @@ def end_session(id):
 
 # calcolo lo stile medio dei campioni associati alla stessa sessione
 @server.route('/session/style_average/<session_id>', methods=['PATCH'])
-def calculate_style_average(session_id):
+def calculateStyleAverage(session_id):
     # Trova la sessione corrispondente all'ID
     session = collection_session.find_one({'_id': ObjectId(session_id)})
     if not session:
@@ -628,7 +628,7 @@ def calculate_style_average(session_id):
 
 
 @server.route('/session/delete/<id>', methods=['DELETE'])
-def delete_session(id):
+def deleteSession(id):
     try:
         # Verifica se l'ID è un ObjectId valido
         if not ObjectId.is_valid(id):
@@ -650,7 +650,7 @@ def delete_session(id):
 
 # permette di cercare i campioni associati a una sessione
 @server.route('/samples/find_by_session/<session_id>', methods=['GET'])
-def get_samples_by_id_session(session_id):
+def getSamplesByIdSession(session_id):
     # Esegui la query per estrarre tutti i campioni con lo stesso session_id
     results = collection_sensor.find({"session_id": session_id})
 
@@ -664,7 +664,7 @@ def get_samples_by_id_session(session_id):
 # find all per i campioni
 @server.route('/samples/find_all', methods=['GET'])
 @token_required
-def get_all_samples():
+def getAllSamples():
     # Esegui la query per estrarre tutti i campioni
     results = collection_sensor.find()
 
@@ -677,7 +677,7 @@ def get_all_samples():
 
 # find by id di una sessione
 @server.route('/samples/find_by_id/<sample_id>', methods=['GET'])
-def get_sample_by_id(sample_id):
+def getSampleById(sample_id):
     try:
         # Converti l'id in ObjectId
         object_id = ObjectId(sample_id)
@@ -696,7 +696,7 @@ def get_sample_by_id(sample_id):
 
 # Route to edit a session by ID (name only)
 @server.route('/session/edit/<id>', methods=['PATCH'])
-def edit_session(id):
+def editSession(id):
     try:
         # Extract the session name from the request
         name = request.json.get('name')
@@ -814,7 +814,7 @@ def get_user_id_by_device_id(device_id):
 
 @server.route("/user/modify", methods=["PATCH"])
 @token_required
-def update_user():
+def updateUser():
     try:
 
         # Estraggo dal jwt l'id user
@@ -983,7 +983,7 @@ def get_style_average():
 
 @server.route('/user/get_global_statistics', methods=['GET'])
 @token_required
-def get_user_stats():
+def getGlobalUserStats():
     user_id = g.current_user.get('user_id')
     user_object_id = ObjectId(user_id)
 
@@ -1037,7 +1037,7 @@ def get_user_stats():
 
 @server.route('/user/get_session_statistics/<session_id>', methods=['GET'])
 @token_required
-def get_session_metrics(session_id):
+def getSessionMetrics(session_id):
     try:
         # Recupera tutti i campioni per la sessione data
         samples = list(collection_sensor.find({"session_id": session_id}))
