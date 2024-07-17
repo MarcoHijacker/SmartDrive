@@ -33,6 +33,9 @@ limiter = Limiter(
     default_limits=["2 per second"]  # Limit to 2 requests per second
 )
 
+# Initialize JWTManager
+jwt_token = JWTManager(server)
+
 MAX_DATA_POINTS = 1000
 UPDATE_FREQ_MS = 100
 
@@ -59,17 +62,12 @@ app.layout = html.Div(
     ]
 )
 
-
 client = MongoClient('mongodb://localhost:27017/')
 db = client['SmartDrive']
 collection_sensor = db['samples']
 collection_session = db['session']
 collection_user = db['user']
 
-
-#jwt_token = JWTManager(server)
-
-# Funzione per verificare il token JWT
 # Funzione per verificare il token JWT
 def verify_token(token):
     try:
@@ -79,6 +77,7 @@ def verify_token(token):
         return None  # Token scaduto
     except jwt.InvalidTokenError:
         return None  # Token non valido
+
 
 # Decoratore per verificare l'autenticazione
 def token_required(f):
@@ -98,11 +97,15 @@ def token_required(f):
         # Per accedere ai dati dell'utente
         g.current_user = payload
 
+        # Clear any residual state that might have been cached
+        request.current_user = None
+
         # Aggiungi il payload decodificato alla richiesta per utilizzarlo nel resto della funzione
         request.current_user = payload
         return f(*args, **kwargs)
 
     return decorated
+
 
 @app.callback(Output("live_graph", "figure"), Input("counter", "n_intervals"))
 def update_graph(_counter):
@@ -132,7 +135,6 @@ def update_graph(_counter):
 
     return graph
 
-
 accelerometer_x = 0
 accelerometer_y = 0
 accelerometer_z = 0
@@ -152,12 +154,12 @@ def convert_numpy_int64_to_int(doc):
             doc[key] = int(value)
     return doc
 
+
 @server.route("/data", methods=["POST"])
 def new_data():  # listens to the data streamed from the sensor logger
 
     # Termino tutte le sessioni dell'utente loggato
     #endUserSessions()
-
 
     global longitude, latitude, speed, free, accelerometer_x, accelerometer_y, accelerometer_z, gyroscope_x, gyroscope_y, gyroscope_z
 
@@ -188,8 +190,6 @@ def new_data():  # listens to the data streamed from the sensor logger
         session_id = active_session['_id']
     elif verify_active_session(idUser) == 0:
         session_id = create_new_session_by_smartphone(datetime.now(), 1, idUser)
-
-
 
     if str(request.method) == "POST":
         #print(f'received data: {request.data}')
@@ -297,6 +297,7 @@ def new_data():  # listens to the data streamed from the sensor logger
 
     return "success"
 
+
 def endUserSessions():
     # Estraggo id user dal jwt
     user_id = g.current_user.get('user_id')
@@ -313,6 +314,7 @@ def endUserSessions():
             {'_id': {'$in': session_ids}},
             {'$set': {'status': 2}}
         )
+
 
 # Verifico che non ci siano sessioni attive
 def verify_active_session(idUser):
@@ -392,6 +394,7 @@ def newSession(newName=None, newStatus=None, idUser=None):
     else:
         return '', 500
 
+
 def create_new_session_by_smartphone(name, status, idUser):
     # Ottenere la data e ora attuale
     current_time = datetime.now()
@@ -416,7 +419,8 @@ def create_new_session_by_smartphone(name, status, idUser):
         # Restituire solo l'ID della sessione creata
         return str(result.inserted_id)
     else:
-        raise RuntimeError("Errore durante l'inserimento della sessione nel database")
+        raise RuntimeError("Error while inserting session into DB")
+
 
 # Tramite questo metodo possiamo avere tutte le sessioni relative a un utente (id estratto dal jwt)
 @server.route("/session/find_by_user", methods=["GET"])
@@ -437,6 +441,7 @@ def getSessionsByUser():
     # Restituire la lista di sessioni
     return jsonify(session_list), 200
 
+
 # find by id
 @server.route("/session/<session_id>", methods=["GET"])
 def getSession(session_id):
@@ -454,7 +459,7 @@ def getSession(session_id):
             return jsonify(session), 200
         else:
             # Se la sessione non è trovata, restituire un messaggio di errore
-            return jsonify({'message': 'Sessione non trovata'}), 404
+            return jsonify({'message': 'Session not found'}), 404
 
     except Exception as e:
         # Gestire eventuali eccezioni durante il recupero della sessione
@@ -648,6 +653,7 @@ def deleteSession(id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
 # permette di cercare i campioni associati a una sessione
 @server.route('/samples/find_by_session/<session_id>', methods=['GET'])
 def getSamplesByIdSession(session_id):
@@ -660,6 +666,7 @@ def getSamplesByIdSession(session_id):
         sample["_id"] = str(sample["_id"])  # Converti ObjectId in stringa
 
     return jsonify(samples)
+
 
 # find all per i campioni
 @server.route('/samples/find_all', methods=['GET'])
@@ -674,6 +681,7 @@ def getAllSamples():
         sample["_id"] = str(sample["_id"])  # Converti ObjectId in stringa
 
     return jsonify(samples)
+
 
 # find by id di una sessione
 @server.route('/samples/find_by_id/<sample_id>', methods=['GET'])
@@ -731,32 +739,29 @@ def editSession(id):
         return jsonify({"error": str(e)}), 500
 
 
-
-
-
 @server.route('/user/login', methods=['POST'])
 def login():
     data = request.get_json()
-    mail = data.get('mail')
+    email = data.get('email')
     password = data.get('password')
 
-    if not mail or not password:
-        return jsonify({'message': 'Mail e password sono richiesti!'}), 400
+    if not email or not password:
+        return jsonify({'message': 'Email and password are required'}), 400
 
     hashed_password = Service.hash_password(password)
-    user = collection_user.find_one({"mail": mail, "password": hashed_password})
+    user = collection_user.find_one({"email": email, "password": hashed_password})
 
     if user:
         # Genera un token JWT con informazioni aggiuntive
         payload = {
             "user_id": str(user["_id"]),  # Converti ObjectId in stringa
-            "mail": user.get("mail", ""),  # Supponendo che 'email' sia un campo nel documento dell'utente
+            "email": user.get("email", ""),  # Supponendo che 'email' sia un campo nel documento dell'utente
             #"exp": datetime.utcnow() + timedelta(hours=10)  # Token valido per 10 ore
         }
         token = jwt.encode(payload, server.config['SECRET_KEY'], algorithm="HS256")
         return jsonify({'token': token})
 
-    return jsonify({'message': 'Credenziali non valide!'}), 401
+    return jsonify({'message': 'Invalid credentials'}), 401
 
 
 @server.route('/user/new_user', methods=['POST'])
@@ -768,7 +773,7 @@ def newUser():
     # Estrarre il nome dalla richiesta API
     name = request.json.get('name')
     surname = request.json.get('surname')
-    mail = request.json.get('mail')
+    email = request.json.get('email')
     password = request.json.get('password')
     device_id = request.json.get('device_id')
 
@@ -779,7 +784,7 @@ def newUser():
     session_data = {
         'name': name,
         'surname': surname,
-        'mail': mail,
+        'email': email,
         'password': Service.hash_password(password),
         'device_id': device_id,
         'created_at': current_time,
@@ -797,7 +802,6 @@ def newUser():
         return '', 500
 
 
-
 def get_user_id_by_device_id(device_id):
 
     # Cerca l'utente con il device_id specificato
@@ -809,7 +813,6 @@ def get_user_id_by_device_id(device_id):
     else:
         # Se non viene trovato nessun utente con il device_id specificato
         return None
-
 
 
 @server.route("/user/modify", methods=["PATCH"])
@@ -872,7 +875,6 @@ def findAll():
     return jsonify(users), 200
 
 
-
 @server.route('/user/<id>', methods=['GET'])
 def findById(id):
 
@@ -890,8 +892,6 @@ def findById(id):
     return jsonify(user), 200
 
 
-
-
 @server.route('/user/delete', methods=['DELETE'])
 @token_required
 def delete_user():
@@ -903,7 +903,7 @@ def delete_user():
         user = collection_user.find_one({"_id": object_id})
 
         if not user:
-            return jsonify({"errore": "Utente non trovato"}), 404
+            return jsonify({"errore": "User not found"}), 404
 
         # Trova tutte le sessioni dell'utente
         sessions = list(collection_session.find({"user_id": str(object_id)}))
@@ -921,7 +921,7 @@ def delete_user():
         result = collection_user.delete_one({"_id": object_id})
 
         if result.deleted_count > 0:
-            return jsonify({"messaggio": "Utente eliminato correttamente"}), 200
+            return jsonify({"messaggio": "User correctly deleted"}), 200
         else:
             return jsonify({"errore": "Errore"}), 500
 

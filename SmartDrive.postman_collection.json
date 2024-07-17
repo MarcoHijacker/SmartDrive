@@ -893,7 +893,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"Priamo\",\r\n    \"surname\" : \"Tarantino\",\r\n    \"mail\" : \"priamo@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"device_id\": \"f7e9ff8d-b6a1-4c16-bb76-7bfb90d0e9b5\"\r\n}",
+							"raw": "{\r\n    \"name\" : \"Name\",\r\n    \"surname\" : \"Surname\",\r\n    \"email\" : \"name.surname@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"device_id\": \"f7e9ff8d-b6a1-4c16-bb76-7bfb90d0e9b5\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -924,7 +924,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\" : \"Priamo\",\r\n    \"surname\" : \"Tarantino\",\r\n    \"mail\" : \"priamo@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"device_id\": \"f7e9ff8d-b6a1-4c16-bb76-7bfb90d0e9b5\"\r\n}",
+									"raw": "{\r\n    \"name\" : \"Name\",\r\n    \"surname\" : \"Surname\",\r\n    \"email\" : \"name.surname@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"device_id\": \"f7e9ff8d-b6a1-4c16-bb76-7bfb90d0e9b5\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -991,7 +991,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"mail\" : \"priamo@gmail.com\",\r\n    \"password\" : \"123\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"name.surname@gmail.com\",\r\n    \"password\" : \"123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1022,7 +1022,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"mail\" : \"priamo@gmail.com\",\r\n    \"password\" : \"123\"\r\n}",
+									"raw": "{\r\n    \"email\" : \"name.surname@gmail.com\",\r\n    \"password\" : \"123\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1152,7 +1152,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "[\n    {\n        \"_id\": \"66902efa4c865c06fce50eb3\",\n        \"created_at\": \"Thu, 11 Jul 2024 21:14:02 GMT\",\n        \"device_id\": \"f7e9ff8d-b6a1-4c16-bb76-7bfb90d0e9b5\",\n        \"mail\": \"priamo@gmail.com\",\n        \"name\": \"Priamo\",\n        \"password\": \"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3\",\n        \"surname\": \"Tarantino\",\n        \"updated_at\": \"Fri, 12 Jul 2024 16:18:51 GMT\"\n    }\n]"
+							"body": "[\n    {\n        \"_id\": \"66902efa4c865c06fce50eb3\",\n        \"created_at\": \"Thu, 11 Jul 2024 21:14:02 GMT\",\n        \"device_id\": \"f7e9ff8d-b6a1-4c16-bb76-7bfb90d0e9b5\",\n        \"email\": \"name.surname@gmail.com\",\n        \"name\": \"Name\",\n        \"password\": \"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3\",\n        \"surname\": \"Tarantino\",\n        \"updated_at\": \"Fri, 12 Jul 2024 16:18:51 GMT\"\n    }\n]"
 						}
 					]
 				},
@@ -1229,7 +1229,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"_id\": \"66902efa4c865c06fce50eb3\",\n    \"created_at\": \"Thu, 11 Jul 2024 21:14:02 GMT\",\n    \"device_id\": \"f7e9ff8d-b6a1-4c16-bb76-7bfb90d0e9b5\",\n    \"mail\": \"priamo@gmail.com\",\n    \"name\": \"Priamo\",\n    \"password\": \"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3\",\n    \"surname\": \"Tarantino\",\n    \"updated_at\": \"Fri, 12 Jul 2024 16:18:51 GMT\"\n}"
+							"body": "{\n    \"_id\": \"66902efa4c865c06fce50eb3\",\n    \"created_at\": \"Thu, 11 Jul 2024 21:14:02 GMT\",\n    \"device_id\": \"f7e9ff8d-b6a1-4c16-bb76-7bfb90d0e9b5\",\n    \"email\": \"name.surname@gmail.com\",\n    \"name\": \"Name\",\n    \"password\": \"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3\",\n    \"surname\": \"Tarantino\",\n    \"updated_at\": \"Fri, 12 Jul 2024 16:18:51 GMT\"\n}"
 						}
 					]
 				},
@@ -1513,7 +1513,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"Priamo\",\r\n    \"surname\" : \"Tarantino\",\r\n    \"device_id\": \"f7e9ff8d-b6a1-4c16-bb76-7bfb90d0e9b5\"\r\n}",
+							"raw": "{\r\n    \"name\" : \"Name\",\r\n    \"surname\" : \"Surname\",\r\n    \"device_id\": \"f7e9ff8d-b6a1-4c16-bb76-7bfb90d0e9b5\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1544,7 +1544,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\" : \"Priamo\",\r\n    \"surname\" : \"Tarantino\",\r\n    \"device_id\": \"f7e9ff8d-b6a1-4c16-bb76-7bfb90d0e9b5\"\r\n}",
+									"raw": "{\r\n    \"name\" : \"Name\",\r\n    \"surname\" : \"Surname\",\r\n    \"device_id\": \"f7e9ff8d-b6a1-4c16-bb76-7bfb90d0e9b5\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1597,7 +1597,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"_id\": \"66902efa4c865c06fce50eb3\",\n    \"created_at\": \"Thu, 11 Jul 2024 21:14:02 GMT\",\n    \"device_id\": \"f7e9ff8d-b6a1-4c16-bb76-7bfb90d0e9b5\",\n    \"mail\": \"priamo@gmail.com\",\n    \"name\": \"Priamo\",\n    \"password\": \"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3\",\n    \"surname\": \"Tarantino\",\n    \"updated_at\": \"Fri, 12 Jul 2024 16:18:51 GMT\"\n}"
+							"body": "{\n    \"_id\": \"66902efa4c865c06fce50eb3\",\n    \"created_at\": \"Thu, 11 Jul 2024 21:14:02 GMT\",\n    \"device_id\": \"f7e9ff8d-b6a1-4c16-bb76-7bfb90d0e9b5\",\n    \"email\": \"name.surname@gmail.com\",\n    \"name\": \"Name\",\n    \"password\": \"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3\",\n    \"surname\": \"Surname\",\n    \"updated_at\": \"Fri, 12 Jul 2024 16:18:51 GMT\"\n}"
 						}
 					]
 				},
