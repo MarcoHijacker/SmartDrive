@@ -277,7 +277,7 @@ def new_data():  # listens to the data streamed from the sensor logger
                     collection_sensor.insert_one(doc)
 
                     # Aggiorno la media degli stili
-                    calculate_style_average(session_id)
+                    calculateStyleAverage(session_id)
 
                     #aggiorno la session con i dati relativi alla posizione dell'ultima acquisizione
                     session_object_id = ObjectId(session_id)
