@@ -1,4 +1,4 @@
-## SmartDrive REST Endpoints
+## SMARTDRIVE REST ENDPOINTS LIST
 
 **Base URI**  
 `http://localhost:8000`
