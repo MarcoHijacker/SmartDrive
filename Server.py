@@ -30,7 +30,7 @@ app = dash.Dash(__name__, server=server)
 limiter = Limiter(
     get_remote_address,
     app=server,
-    default_limits=["2 per second"]  # Limit to 2 requests per second
+    default_limits=["20 per second"]  # Limit to 20 requests per second
 )
 
 # Initialize JWTManager
