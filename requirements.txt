@@ -1,6 +1,7 @@
 dash
 Flask
 Flask-Limiter
+flask_cors
 numpy
 pymongo
 scikit-learn

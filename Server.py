@@ -5,6 +5,8 @@ from dash.dependencies import Output, Input
 from dash import dcc, html
 from datetime import datetime, timedelta
 import json
+import csv
+import tempfile
 import plotly.graph_objs as go
 from collections import deque
 from flask import Flask, request, jsonify, g
@@ -19,6 +21,8 @@ import TestDrive
 import Service
 import jwt
 from functools import wraps
+from werkzeug.utils import secure_filename
+import os
 
 server = Flask(__name__)
 server.config['SECRET_KEY'] = 'supersecretkey'  # Chiave segreta per JWT
@@ -67,6 +71,7 @@ db = client['SmartDrive']
 collection_sensor = db['samples']
 collection_session = db['session']
 collection_user = db['user']
+collection_test = db['test']  # Add this line for the 'test' collection
 
 # Funzione per verificare il token JWT
 def verify_token(token):
@@ -154,6 +159,22 @@ def convert_numpy_int64_to_int(doc):
             doc[key] = int(value)
     return doc
 
+def convert_oid_fields(record):
+    """ Convert $oid fields in the record to ObjectId """
+    if '_id' in record and '$oid' in record['_id']:
+        record['_id'] = ObjectId(record['_id']['$oid'])
+    return record
+
+def convert_dates_to_strings(record):
+    """ Convert $date fields in the record to ISO 8601 strings """
+    for key, value in record.items():
+        if isinstance(value, dict) and '$date' in value:
+            if isinstance(value['$date'], str):
+                record[key] = value['$date']
+            else:
+                timestamp = value['$date']
+                record[key] = datetime.fromtimestamp(timestamp / 1000).isoformat()
+    return record
 
 @server.route("/data", methods=["POST"])
 def new_data():  # listens to the data streamed from the sensor logger
@@ -1078,6 +1099,79 @@ def getSessionMetrics(session_id):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+# Endpoint to upload data to the samples collection
+@server.route('/upload/samples', methods=['POST'])
+def upload_samples():
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(tempfile.gettempdir(), filename)
+        file.save(file_path)
+        with open(file_path, 'r') as f:
+            data = json.load(f) if filename.endswith('.json') else list(csv.DictReader(f))
+            for record in data:
+                record = convert_oid_fields(record)
+                record = convert_dates_to_strings(record)  # Convert date fields to strings
+                collection_sensor.replace_one({'_id': record['_id']}, record, upsert=True)
+        os.remove(file_path)
+        return jsonify({"message": "File successfully uploaded"}), 200
+    else:
+        return jsonify({"error": "Invalid file format"}), 400
+
+# Endpoint to upload data to the session collection
+@server.route('/upload/session', methods=['POST'])
+def upload_session():
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(tempfile.gettempdir(), filename)
+        file.save(file_path)
+        with open(file_path, 'r') as f:
+            data = json.load(f) if filename.endswith('.json') else list(csv.DictReader(f))
+            for record in data:
+                record = convert_oid_fields(record)
+                record = convert_dates_to_strings(record)  # Convert date fields to strings
+                collection_session.replace_one({'_id': record['_id']}, record, upsert=True)
+        os.remove(file_path)
+        return jsonify({"message": "File successfully uploaded"}), 200
+    else:
+        return jsonify({"error": "Invalid file format"}), 400
+
+# Endpoint to upload data to the test collection
+@server.route('/upload/test', methods=['POST'])
+def upload_test():
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(tempfile.gettempdir(), filename)
+        file.save(file_path)
+        with open(file_path, 'r') as f:
+            data = json.load(f) if filename.endswith('.json') else list(csv.DictReader(f))
+            for record in data:
+                record = convert_oid_fields(record)
+                record = convert_dates_to_strings(record)  # Convert date fields to strings
+                collection_test.replace_one({'_id': record['_id']}, record, upsert=True)
+        os.remove(file_path)
+        return jsonify({"message": "File successfully uploaded"}), 200
+    else:
+        return jsonify({"error": "Invalid file format"}), 400
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'csv', 'json'}
 
 
 if __name__ == "__main__":
